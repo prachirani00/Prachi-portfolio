@@ -3,10 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="assets/profile.jpg">
+  <link rel="shortcut icon" type="image/png" href="assets/profile.jpg">
+  <link rel="apple-touch-icon" href="assets/profile.jpg">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <link rel="stylesheet" href="style.css">
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
-  <title>Portfolio | Ayush Sharawat</title>
+  <title>Ayush Sharawat - Portfolio</title>
 </head>
 <body>
   <!-- Loading Screen -->
@@ -257,100 +260,156 @@
       <div class="section-content">
         <h1><i class="fas fa-laptop-code"></i> Featured Projects</h1>
         
-        <div class="project-item">
-          <div class="project-image">
-            <img src="assets/saar.ai.jpg" alt="Saar.ai Project Screenshot">
-          </div>
-          <div class="project-header">
-            <i class="fas fa-brain project-icon"></i>
-            <div>
-              <h2>Saar.ai</h2>
-              <p>AI-powered search engine (Perplexity clone)</p>
+        <div class="projects-grid">
+          <div class="project-item">
+            <div class="project-image">
+              <img src="assets/zynkstack.jpg" alt="ZynkStack Project Screenshot">
+            </div>
+            <div class="project-header">
+              <i class="fas fa-comments project-icon"></i>
+              <div>
+                <h2>ZynkStack <span class="pinned-badge">📌 Featured</span></h2>
+                <p>Full-stack chat app with video calling</p>
+              </div>
+            </div>
+            <p>A modern, full-stack chat application with real-time messaging, video calling, and friend management. Features secure authentication, notifications, theme support, and responsive design for seamless communication.</p>
+            <div class="project-tech">
+              <span>Node.js</span>
+              <span>React</span>
+              <span>MongoDB</span>
+              <span>Socket.io</span>
+              <span>Stream API</span>
+              <span>Vite</span>
+              <span>Tailwind CSS</span>
+            </div>
+            <div class="project-links">
+              <a href="https://zynkstack.onrender.com/" class="project-link" target="_blank"><i class="fas fa-external-link-alt"></i> Live Demo</a>
+              <a href="https://github.com/ayushsharawat/ZyanStack.git" class="project-link" target="_blank"><i class="fab fa-github"></i> Source Code</a>
             </div>
           </div>
-          <p>An intelligent AI-powered search engine inspired by Perplexity, featuring advanced natural language processing and real-time information retrieval. Provides accurate, contextual answers with source citations and an intuitive user interface.</p>
-          <div class="project-tech">
-            <span>AI/ML</span>
-            <span>NLP</span>
-            <span>Python</span>
-            <span>API Integration</span>
-            <span>Real-time Search</span>
-          </div>
-          <div class="project-links">
-            <a href="#" class="project-link" onclick="showLinkComingSoon()"><i class="fas fa-external-link-alt"></i> Live Demo</a>
-            <a href="https://github.com/ayushsharawat/saar.git" class="project-link" target="_blank"><i class="fab fa-github"></i> Source Code</a>
-          </div>
-        </div>
 
-        <div class="project-item">
-          <div class="project-image">
-            <img src="assets/repo-quest.jpg" alt="Repo Quest Project Screenshot">
-          </div>
-          <div class="project-header">
-            <i class="fas fa-search project-icon"></i>
-            <div>
-              <h2>Repo Quest</h2>
-              <p>ML + NLP powered GitHub code snippet search</p>
+          <div class="project-item">
+            <div class="project-image">
+              <img src="assets/audio-cnn.jpg" alt="Audio CNN Visualizer Project Screenshot">
+            </div>
+            <div class="project-header">
+              <i class="fas fa-waveform-lines project-icon"></i>
+              <div>
+                <h2>Audio CNN Visualizer <span class="pinned-badge">📌 Featured</span></h2>
+                <p>Audio classification with CNN visualization</p>
+              </div>
+            </div>
+            <p>A full-stack application for audio classification and deep learning visualization. Upload WAV files for CNN inference with real-time predictions, feature map visualization, and interactive waveform displays using Next.js and Python backend.</p>
+            <div class="project-tech">
+              <span>Next.js</span>
+              <span>React</span>
+              <span>Python</span>
+              <span>FastAPI</span>
+              <span>CNN</span>
+              <span>Deep Learning</span>
+              <span>Tailwind CSS</span>
+            </div>
+            <div class="project-links">
+              <a href="https://audio-cnn-gamma.vercel.app/" class="project-link" target="_blank"><i class="fas fa-external-link-alt"></i> Live Demo</a>
+              <a href="https://github.com/ayushsharawat/Audio-CNN.git" class="project-link" target="_blank"><i class="fab fa-github"></i> Source Code</a>
             </div>
           </div>
-          <p>An innovative GitHub code snippet search engine powered by Machine Learning and Natural Language Processing. Helps developers find relevant code snippets from repositories using intelligent search algorithms.</p>
-          <div class="project-tech">
-            <span>Machine Learning</span>
-            <span>NLP</span>
-            <span>Python</span>
-            <span>GitHub API</span>
-          </div>
-          <div class="project-links">
-            <a href="#" class="project-link" onclick="showLinkComingSoon()"><i class="fas fa-external-link-alt"></i> Live Demo</a>
-            <a href="#" class="project-link" onclick="showLinkComingSoon()"><i class="fab fa-github"></i> Source Code</a>
-          </div>
-        </div>
 
-        <div class="project-item">
-          <div class="project-image">
-            <img src="assets/blog-manager.jpg" alt="Blog Manager Project Screenshot">
-          </div>
-          <div class="project-header">
-            <i class="fas fa-blog project-icon"></i>
-            <div>
-              <h2>Blog Manager</h2>
-              <p>Full-stack blog creation and editing platform</p>
+          <div class="project-item">
+            <div class="project-image">
+              <img src="assets/saar.ai.jpg" alt="Saar.ai Project Screenshot">
+            </div>
+            <div class="project-header">
+              <i class="fas fa-brain project-icon"></i>
+              <div>
+                <h2>Saar.ai</h2>
+                <p>AI-powered search engine (Perplexity clone)</p>
+              </div>
+            </div>
+            <p>An intelligent AI-powered search engine inspired by Perplexity, featuring advanced natural language processing and real-time information retrieval. Provides accurate, contextual answers with source citations and an intuitive user interface.</p>
+            <div class="project-tech">
+              <span>AI/ML</span>
+              <span>NLP</span>
+              <span>Python</span>
+              <span>API Integration</span>
+              <span>Real-time Search</span>
+            </div>
+            <div class="project-links">
+              <a href="#" class="project-link" onclick="showLinkComingSoon()"><i class="fas fa-external-link-alt"></i> Live Demo</a>
+              <a href="https://github.com/ayushsharawat/saar.git" class="project-link" target="_blank"><i class="fab fa-github"></i> Source Code</a>
             </div>
           </div>
-          <p>A comprehensive full-stack blog creation and editing platform with modern UI/UX design. Features include content management, user authentication, and responsive design optimized for all devices.</p>
-          <div class="project-tech">
-            <span>HTML</span>
-            <span>CSS</span>
-            <span>JavaScript</span>
-            <span>Figma</span>
-          </div>
-          <div class="project-links">
-            <a href="#" class="project-link" onclick="showLinkComingSoon()"><i class="fas fa-external-link-alt"></i> Live Demo</a>
-            <a href="#" class="project-link" onclick="showLinkComingSoon()"><i class="fab fa-github"></i> Source Code</a>
-          </div>
-        </div>
 
-        <div class="project-item">
-          <div class="project-image">
-            <img src="assets/employee-manager.jpg" alt="Employee Manager Project Screenshot">
-          </div>
-          <div class="project-header">
-            <i class="fas fa-users-cog project-icon"></i>
-            <div>
-              <h2>Employee Manager</h2>
-              <p>Python + MySQL employee record system</p>
+          <div class="project-item">
+            <div class="project-image">
+              <img src="assets/repo-quest.jpg" alt="Repo Quest Project Screenshot">
+            </div>
+            <div class="project-header">
+              <i class="fas fa-search project-icon"></i>
+              <div>
+                <h2>Repo Quest</h2>
+                <p>ML + NLP powered GitHub code snippet search</p>
+              </div>
+            </div>
+            <p>An innovative GitHub code snippet search engine powered by Machine Learning and Natural Language Processing. Helps developers find relevant code snippets from repositories using intelligent search algorithms.</p>
+            <div class="project-tech">
+              <span>Machine Learning</span>
+              <span>NLP</span>
+              <span>Python</span>
+              <span>GitHub API</span>
+            </div>
+            <div class="project-links">
+              <a href="#" class="project-link" onclick="showLinkComingSoon()"><i class="fas fa-external-link-alt"></i> Live Demo</a>
+              <a href="#" class="project-link" onclick="showLinkComingSoon()"><i class="fab fa-github"></i> Source Code</a>
             </div>
           </div>
-          <p>A robust employee record management system built with Python and MySQL. Features complete CRUD operations, data validation, and comprehensive reporting capabilities for HR management.</p>
-          <div class="project-tech">
-            <span>Python</span>
-            <span>MySQL</span>
-            <span>Database Design</span>
-            <span>CRUD Operations</span>
+
+          <div class="project-item">
+            <div class="project-image">
+              <img src="assets/blog-manager.jpg" alt="Blog Manager Project Screenshot">
+            </div>
+            <div class="project-header">
+              <i class="fas fa-blog project-icon"></i>
+              <div>
+                <h2>Blog Manager</h2>
+                <p>Full-stack blog creation and editing platform</p>
+              </div>
+            </div>
+            <p>A comprehensive full-stack blog creation and editing platform with modern UI/UX design. Features include content management, user authentication, and responsive design optimized for all devices.</p>
+            <div class="project-tech">
+              <span>HTML</span>
+              <span>CSS</span>
+              <span>JavaScript</span>
+              <span>Figma</span>
+            </div>
+            <div class="project-links">
+              <a href="#" class="project-link" onclick="showLinkComingSoon()"><i class="fas fa-external-link-alt"></i> Live Demo</a>
+              <a href="#" class="project-link" onclick="showLinkComingSoon()"><i class="fab fa-github"></i> Source Code</a>
+            </div>
           </div>
-          <div class="project-links">
-            <a href="#" class="project-link" onclick="showLinkComingSoon()"><i class="fas fa-external-link-alt"></i> Live Demo</a>
-            <a href="#" class="project-link" onclick="showLinkComingSoon()"><i class="fab fa-github"></i> Source Code</a>
+
+          <div class="project-item">
+            <div class="project-image">
+              <img src="assets/employee-manager.jpg" alt="Employee Manager Project Screenshot">
+            </div>
+            <div class="project-header">
+              <i class="fas fa-users-cog project-icon"></i>
+              <div>
+                <h2>Employee Manager</h2>
+                <p>Python + MySQL employee record system</p>
+              </div>
+            </div>
+            <p>A robust employee record management system built with Python and MySQL. Features complete CRUD operations, data validation, and comprehensive reporting capabilities for HR management.</p>
+            <div class="project-tech">
+              <span>Python</span>
+              <span>MySQL</span>
+              <span>Database Design</span>
+              <span>CRUD Operations</span>
+            </div>
+            <div class="project-links">
+              <a href="#" class="project-link" onclick="showLinkComingSoon()"><i class="fas fa-external-link-alt"></i> Live Demo</a>
+              <a href="#" class="project-link" onclick="showLinkComingSoon()"><i class="fab fa-github"></i> Source Code</a>
+            </div>
           </div>
         </div>
       </div>
@@ -371,7 +430,7 @@
                 </div>
                 <div class="education-text">
                   <h2>B.Tech Computer Science Engineering (AI)</h2>
-                  <h3>KIET Group of Institutions, Ghaziabad</h3>
+                  <h3><a href="https://www.kiet.edu" target="_blank" class="institution-link">KIET Group of Institutions, Ghaziabad</a></h3>
                   <p>Currently pursuing Bachelor's degree in Computer Science Engineering with specialization in Artificial Intelligence. Focusing on advanced programming concepts, AI/ML algorithms, and software development practices.</p>
                   <ul>
                     <li>Current CGPA: 7.2</li>
@@ -393,7 +452,7 @@
                 </div>
                 <div class="education-text">
                   <h2>Diploma in Engineering</h2>
-                  <h3>Government Polytechnic, Ghaziabad</h3>
+                  <h3><a href="https://www.gpghaziabad.ac.in" target="_blank" class="institution-link">Government Polytechnic, Ghaziabad</a></h3>
                   <p>Completed diploma from Board of Technical Education Uttar Pradesh (BTEUP) with strong foundation in engineering principles and technical skills.</p>
                   <ul>
                     <li>Achieved 70% aggregate marks</li>
@@ -414,7 +473,7 @@
                 </div>
                 <div class="education-text">
                   <h2>Secondary Education (10th Grade)</h2>
-                  <h3>Dehradun Public School, Ghaziabad</h3>
+                  <h3><a href="https://www.ddps.in" target="_blank" class="institution-link">Dehradun Public School, Ghaziabad</a></h3>
                   <p>Completed secondary education from CBSE board with excellent academic performance.</p>
                   <ul>
                     <li>Achieved 78.4% in CBSE Board Examination</li>
@@ -544,15 +603,15 @@
           <h2>Find Me Online</h2>
           <div class="social-grid">
             <a href="https://www.linkedin.com/in/ayushsharawat" class="social-link" target="_blank">
-              <img src="assets/linkedin-dark.png" alt="LinkedIn">
+              <img src="assets/linkedin-light.png" alt="LinkedIn">
               <span>LinkedIn</span>
             </a>
             <a href="https://github.com/ayushsharawat" class="social-link" target="_blank">
-              <img src="assets/github-dark.png" alt="GitHub">
+              <img src="assets/github-light.png" alt="GitHub">
               <span>GitHub</span>
             </a>
             <a href="https://www.instagram.com/ayushsharawat" class="social-link" target="_blank">
-              <img src="assets/instagram-dark.png" alt="Instagram">
+              <img src="assets/instagram-light.png" alt="Instagram">
               <span>Instagram</span>
             </a>
             <a href="assets/resume.pdf" class="social-link" target="_blank">
