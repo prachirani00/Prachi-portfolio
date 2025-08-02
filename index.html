@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+  <title>Portfolio | Ayush Sharawat</title>
+</head>
+<body>
+  <h1 class='logo'>
+    Ayush Sharawat
+    <span>Portfolio</span>
+  </h1>
+
+  <!-- Navigation Menu -->
+  <nav class="main-nav">
+    <button class="nav-item about-nav" onclick="showPanel('about')">
+      <div class="nav-icon about-icon"></div>
+      <div class="nav-info">
+        <h3>About</h3>
+        <p>Who I Am</p>
+      </div>
+    </button>
+    
+    <button class="nav-item skills-nav" onclick="showPanel('skills')">
+      <div class="nav-icon skills-icon"></div>
+      <div class="nav-info">
+        <h3>Skills</h3>
+        <p>What I Do</p>
+      </div>
+    </button>
+    
+    <button class="nav-item projects-nav" onclick="showPanel('projects')">
+      <div class="nav-icon projects-icon"></div>
+      <div class="nav-info">
+        <h3>Projects</h3>
+        <p>What I've Built</p>
+      </div>
+    </button>
+    
+    <button class="nav-item experience-nav" onclick="showPanel('experience')">
+      <div class="nav-icon experience-icon"></div>
+      <div class="nav-info">
+        <h3>Experience</h3>
+        <p>My Journey</p>
+      </div>
+    </button>
+    
+    <button class="nav-item contact-nav" onclick="showPanel('contact')">
+      <div class="nav-icon contact-icon"></div>
+      <div class="nav-info">
+        <h3>Contact</h3>
+        <p>Get In Touch</p>
+      </div>
+    </button>
+  </nav>
+
+  <!-- Hero Section -->
+  <div class="hero-section">
+    <div class="hero-content">
+      <h1 class="hero-title">Welcome to My Universe</h1>
+      <p class="hero-subtitle">Explore the cosmos of creativity and innovation</p>
+      <div class="hero-cta">
+        <button class="cta-button" onclick="showPanel('about')">
+          <span>Begin Journey</span>
+          <i class="fas fa-rocket"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Interactive Space Objects -->
+  <div class="space-objects">
+    <div class="space-object asteroid-1" data-info="Asteroid Alpha">
+      <div class="object-tooltip">Asteroid Alpha - Click to explore skills</div>
+    </div>
+    <div class="space-object satellite-1" data-info="Planet Mars">
+      <div class="object-tooltip">Planet Mars - View my projects</div>
+    </div>
+    <div class="space-object nebula-1" data-info="Nebula Dreams">
+      <div class="object-tooltip">Nebula Dreams - Experience my journey</div>
+    </div>
+  </div>
+
+  <!-- Animated Stars -->
+  <div class="stars-container">
+    <div class="stars stars-small"></div>
+    <div class="stars stars-medium"></div>
+    <div class="stars stars-large"></div>
+  </div>
+
+  <!-- Background Elements -->
+  <div class="background-elements">
+    <div class="floating-element element-1"></div>
+    <div class="floating-element element-2"></div>
+    <div class="floating-element element-3"></div>
+    <div class="floating-element element-4"></div>
+    <div class="floating-element element-5"></div>
+    <div class="floating-element element-6"></div>
+    <div class="floating-element element-7"></div>
+    <div class="floating-element element-8"></div>
+  </div>
+
+  <!-- Panels -->
+  <div class="panel about-panel" id="about-panel">
+    <button class="close-btn" onclick="closePanel()">&times;</button>
+    <div class="panel-content">
+      <h1><i class="fas fa-user"></i> About Me</h1>
+      
+      <div class="profile-section">
+        <div class="profile-image">
+          <img src="assets/profile.jpg" alt="Ayush Sharawat">
+        </div>
+        <div class="profile-info">
+          <h2>Hello, I'm Ayush Sharawat</h2>
+          <h3><span id="role-text">Computer Science Student</span></h3>
+        </div>
+      </div>
+
+      <p>I'm a passionate computer science engineering student specializing in Artificial Intelligence at KIET Group of Institutions. I love solving complex problems through innovative technology solutions and constantly learning new programming languages and frameworks.</p>
+      
+      <h2>What I Bring to the Table</h2>
+      <p>With a strong foundation in programming languages like Java, Python, and C, along with database management skills, I create comprehensive software solutions. I'm particularly interested in machine learning, NLP, and full-stack development.</p>
+      
+      <div class="stats-grid">
+        <div class="stat-item">
+          <h3>7.2</h3>
+          <p>Current CGPA</p>
+        </div>
+        <div class="stat-item">
+          <h3>10+</h3>
+          <p>Programming Languages</p>
+        </div>
+        <div class="stat-item">
+          <h3>3+</h3>
+          <p>Major Projects</p>
+        </div>
+      </div>
+
+      <h2>Education</h2>
+      <div class="education-list">
+        <div class="education-item">
+          <h3>B.Tech in Computer Science and Engineering (AI)</h3>
+          <p>KIET Group of Institutions, Ghaziabad (AKTU)</p>
+          <span>Currently Pursuing | CGPA: 7.2</span>
+        </div>
+        <div class="education-item">
+          <h3>Diploma</h3>
+          <p>Government Polytechnic, Ghaziabad (BTEUP)</p>
+          <span>Completed with 70%</span>
+        </div>
+        <div class="education-item">
+          <h3>10th Grade</h3>
+          <p>Dehradun Public School, Ghaziabad (CBSE)</p>
+          <span>Completed with 78.4%</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel skills-panel" id="skills-panel">
+    <button class="close-btn" onclick="closePanel()">&times;</button>
+    <div class="panel-content">
+      <h1><i class="fas fa-code"></i> Skills & Technologies</h1>
+      
+      <div class="skills-category">
+        <h2>Programming Languages</h2>
+        <div class="skills-grid">
+          <div class="skill-item">
+            <i class="fab fa-java skill-icon"></i>
+            <h3>Java</h3>
+            <div class="skill-bar">
+              <div class="skill-progress" data-width="85"></div>
+            </div>
+          </div>
+          <div class="skill-item">
+            <i class="fab fa-python skill-icon"></i>
+            <h3>Python</h3>
+            <div class="skill-bar">
+              <div class="skill-progress" data-width="80"></div>
+            </div>
+          </div>
+          <div class="skill-item">
+            <i class="fas fa-code skill-icon"></i>
+            <h3>C Programming</h3>
+            <div class="skill-bar">
+              <div class="skill-progress" data-width="75"></div>
+            </div>
+          </div>
+          <div class="skill-item">
+            <i class="fas fa-database skill-icon"></i>
+            <h3>MySQL</h3>
+            <div class="skill-bar">
+              <div class="skill-progress" data-width="70"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="skills-category">
+        <h2>Technical Skills</h2>
+        <div class="skills-grid">
+          <div class="skill-item">
+            <i class="fas fa-brain skill-icon"></i>
+            <h3>Machine Learning</h3>
+            <div class="skill-bar">
+              <div class="skill-progress" data-width="70"></div>
+            </div>
+          </div>
+          <div class="skill-item">
+            <i class="fas fa-language skill-icon"></i>
+            <h3>NLP</h3>
+            <div class="skill-bar">
+              <div class="skill-progress" data-width="65"></div>
+            </div>
+          </div>
+          <div class="skill-item">
+            <i class="fas fa-project-diagram skill-icon"></i>
+            <h3>Data Structures</h3>
+            <div class="skill-bar">
+              <div class="skill-progress" data-width="75"></div>
+            </div>
+          </div>
+          <div class="skill-item">
+            <i class="fas fa-cogs skill-icon"></i>
+            <h3>Algorithms</h3>
+            <div class="skill-bar">
+              <div class="skill-progress" data-width="70"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="skills-category">
+        <h2>Tools & Others</h2>
+        <div class="skill-tags">
+          <span class="skill-tag">Git</span>
+          <span class="skill-tag">DBMS</span>
+          <span class="skill-tag">AWS</span>
+          <span class="skill-tag">Figma</span>
+          <span class="skill-tag">UI/UX Design</span>
+          <span class="skill-tag">Graphics</span>
+          <span class="skill-tag">DAA</span>
+          <span class="skill-tag">DSA</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel projects-panel" id="projects-panel">
+    <button class="close-btn" onclick="closePanel()">&times;</button>
+    <div class="panel-content">
+      <h1><i class="fas fa-laptop-code"></i> Featured Projects</h1>
+      
+      <div class="project-item">
+        <div class="project-header">
+          <i class="fas fa-search project-icon"></i>
+          <div>
+            <h2>Repo Quest</h2>
+            <p>ML + NLP powered GitHub code snippet search</p>
+          </div>
+        </div>
+        <p>An innovative GitHub code snippet search engine powered by Machine Learning and Natural Language Processing. Helps developers find relevant code snippets from repositories using intelligent search algorithms.</p>
+        <div class="project-tech">
+          <span>Machine Learning</span>
+          <span>NLP</span>
+          <span>Python</span>
+          <span>GitHub API</span>
+        </div>
+        <div class="project-links">
+          <a href="#" class="project-link"><i class="fas fa-external-link-alt"></i> Live Demo</a>
+          <a href="#" class="project-link"><i class="fab fa-github"></i> Source Code</a>
+        </div>
+      </div>
+
+      <div class="project-item">
+        <div class="project-header">
+          <i class="fas fa-blog project-icon"></i>
+          <div>
+            <h2>Blog Manager</h2>
+            <p>Full-stack blog creation and editing platform</p>
+          </div>
+        </div>
+        <p>A comprehensive full-stack blog creation and editing platform with modern UI/UX design. Features include content management, user authentication, and responsive design optimized for all devices.</p>
+        <div class="project-tech">
+          <span>HTML</span>
+          <span>CSS</span>
+          <span>JavaScript</span>
+          <span>Figma</span>
+        </div>
+        <div class="project-links">
+          <a href="#" class="project-link"><i class="fas fa-external-link-alt"></i> Live Demo</a>
+          <a href="#" class="project-link"><i class="fab fa-github"></i> Source Code</a>
+        </div>
+      </div>
+
+      <div class="project-item">
+        <div class="project-header">
+          <i class="fas fa-users-cog project-icon"></i>
+          <div>
+            <h2>Employee Manager</h2>
+            <p>Python + MySQL employee record system</p>
+          </div>
+        </div>
+        <p>A robust employee record management system built with Python and MySQL. Features complete CRUD operations, data validation, and comprehensive reporting capabilities for HR management.</p>
+        <div class="project-tech">
+          <span>Python</span>
+          <span>MySQL</span>
+          <span>Database Design</span>
+          <span>CRUD Operations</span>
+        </div>
+        <div class="project-links">
+          <a href="#" class="project-link"><i class="fas fa-external-link-alt"></i> Live Demo</a>
+          <a href="#" class="project-link"><i class="fab fa-github"></i> Source Code</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel experience-panel" id="experience-panel">
+    <button class="close-btn" onclick="closePanel()">&times;</button>
+    <div class="panel-content">
+      <h1><i class="fas fa-graduation-cap"></i> Education & Experience</h1>
+      
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-date">2021 - Present</div>
+          <div class="timeline-content">
+            <h2>B.Tech Computer Science Engineering (AI)</h2>
+            <h3>KIET Group of Institutions, Ghaziabad</h3>
+            <p>Currently pursuing Bachelor's degree in Computer Science Engineering with specialization in Artificial Intelligence. Focusing on advanced programming concepts, AI/ML algorithms, and software development practices.</p>
+            <ul>
+              <li>Current CGPA: 7.2</li>
+              <li>Specialized coursework in AI and Machine Learning</li>
+              <li>Developed multiple projects using Python, Java, and C</li>
+              <li>Active participation in coding competitions</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-date">2018 - 2021</div>
+          <div class="timeline-content">
+            <h2>Diploma in Engineering</h2>
+            <h3>Government Polytechnic, Ghaziabad</h3>
+            <p>Completed diploma from Board of Technical Education Uttar Pradesh (BTEUP) with strong foundation in engineering principles and technical skills.</p>
+            <ul>
+              <li>Achieved 70% aggregate marks</li>
+              <li>Strong foundation in engineering mathematics</li>
+              <li>Hands-on experience with technical projects</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-date">2017 - 2018</div>
+          <div class="timeline-content">
+            <h2>Secondary Education (10th Grade)</h2>
+            <h3>Dehradun Public School, Ghaziabad</h3>
+            <p>Completed secondary education from CBSE board with excellent academic performance.</p>
+            <ul>
+              <li>Achieved 78.4% in CBSE Board Examination</li>
+              <li>Strong performance in Mathematics and Science</li>
+              <li>Developed early interest in technology</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="certifications">
+        <h2>Certifications & Achievements</h2>
+        
+        <div class="cert-item">
+          <i class="fab fa-aws"></i>
+          <div>
+            <h3>AWS Academy Graduate - AWS Cloud Foundations</h3>
+            <p>Issued Dec 3, 2024 - Amazon Web Services</p>
+            <a href="#" class="cert-link" data-cert="aws">View Certificate</a>
+          </div>
+        </div>
+
+        <div class="cert-item">
+          <i class="fas fa-network-wired"></i>
+          <div>
+            <h3>CCNA: Enterprise Networking, Security, and Automation</h3>
+            <p>Issued Jun 11, 2025 - Cisco Networking Academy</p>
+            <a href="#" class="cert-link" data-cert="ccna-enterprise">View Certificate</a>
+          </div>
+        </div>
+
+        <div class="cert-item">
+          <i class="fas fa-network-wired"></i>
+          <div>
+            <h3>CCNA: Introduction to Networks</h3>
+            <p>Issued Jun 7, 2025 - Cisco Networking Academy</p>
+            <a href="#" class="cert-link" data-cert="ccna-intro">View Certificate</a>
+          </div>
+        </div>
+
+        <div class="cert-item">
+          <i class="fas fa-wifi"></i>
+          <div>
+            <h3>CCNA: Switching, Routing, and Wireless Essentials</h3>
+            <p>Issued Jun 7, 2025 - Cisco Networking Academy</p>
+            <a href="#" class="cert-link" data-cert="ccna-switching">View Certificate</a>
+          </div>
+        </div>
+
+        <div class="cert-item">
+          <i class="fas fa-shield-alt"></i>
+          <div>
+            <h3>Introduction to Cybersecurity</h3>
+            <p>Issued May 21, 2025 - Cisco Networking Academy</p>
+            <a href="#" class="cert-link" data-cert="cybersecurity">View Certificate</a>
+          </div>
+        </div>
+
+        <div class="cert-item">
+          <i class="fab fa-python"></i>
+          <div>
+            <h3>Python Essentials 1</h3>
+            <p>Issued May 20, 2025 - Cisco Networking Academy</p>
+            <a href="#" class="cert-link" data-cert="python1">View Certificate</a>
+          </div>
+        </div>
+
+        <div class="cert-item">
+          <i class="fab fa-python"></i>
+          <div>
+            <h3>Python Essentials 2</h3>
+            <p>Issued May 21, 2025 - Cisco Networking Academy</p>
+            <a href="#" class="cert-link" data-cert="python2">View Certificate</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel contact-panel" id="contact-panel">
+    <button class="close-btn" onclick="closePanel()">&times;</button>
+    <div class="panel-content">
+      <h1><i class="fas fa-envelope"></i> Get In Touch</h1>
+      
+      <div class="contact-intro">
+        <h2>Let's Connect</h2>
+        <p>I'm always excited to collaborate on new projects, discuss technology, or explore opportunities in software development and AI. Feel free to reach out!</p>
+      </div>
+
+      <div class="contact-methods">
+        <div class="contact-item">
+          <i class="fas fa-envelope"></i>
+          <div>
+            <h3>Email</h3>
+            <p>whatsupayush@gmail.com</p>
+            <a href="mailto:whatsupayush@gmail.com">Send Email</a>
+          </div>
+        </div>
+
+        <div class="contact-item">
+          <i class="fas fa-phone"></i>
+          <div>
+            <h3>Phone</h3>
+            <p>+91 9319391078</p>
+            <a href="tel:+919319391078">Call Now</a>
+          </div>
+        </div>
+
+        <div class="contact-item">
+          <i class="fas fa-map-marker-alt"></i>
+          <div>
+            <h3>Location</h3>
+            <p>Ghaziabad, Uttar Pradesh, India</p>
+            <span>Open to remote opportunities</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="social-links">
+        <h2>Find Me Online</h2>
+        <div class="social-grid">
+          <a href="https://www.linkedin.com/in/ayushsharawat" class="social-link" target="_blank">
+            <img src="assets/linkedin-dark.png" alt="LinkedIn">
+            <span>LinkedIn</span>
+          </a>
+          <a href="https://github.com/ayushsharawat" class="social-link" target="_blank">
+            <img src="assets/github-dark.png" alt="GitHub">
+            <span>GitHub</span>
+          </a>
+          <a href="https://www.instagram.com/ayushsharawat" class="social-link" target="_blank">
+            <img src="assets/instagram-dark.png" alt="Instagram">
+            <span>Instagram</span>
+          </a>
+          <a href="assets/resume.pdf" class="social-link" target="_blank">
+            <i class="fas fa-file-pdf"></i>
+            <span>Resume</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="contact-form">
+        <h2>Send Me a Message</h2>
+        <form id="contactForm">
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" required>
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required>
+          </div>
+          <div class="form-group">
+            <label for="subject">Subject</label>
+            <input type="text" id="subject" name="subject" required>
+          </div>
+          <div class="form-group">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" rows="5" required></textarea>
+          </div>
+          <button type="submit" class="submit-btn">
+            <i class="fas fa-paper-plane"></i>
+            Send Message
+          </button>
+        </form>
+        <div id="formMessage" class="form-message"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
