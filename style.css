@@ -138,7 +138,8 @@ body {
 .about-icon { background: linear-gradient(45deg, #ff6b6b, #ee5a52); }
 .skills-icon { background: linear-gradient(45deg, #4ecdc4, #44a08d); }
 .projects-icon { background: linear-gradient(45deg, #45b7d1, #3498db); }
-.experience-icon { background: linear-gradient(45deg, #96ceb4, #85c1a3); }
+.education-icon { background: linear-gradient(45deg, #f093fb, #f5576c); }
+.certificates-icon { background: linear-gradient(45deg, #4facfe, #00f2fe); }
 .contact-icon { background: linear-gradient(45deg, #feca57, #ff9ff3); }
 
 .nav-info h3 {
@@ -714,12 +715,18 @@ body {
 }
 
 .profile-image img {
-  width: 80px;
-  height: 80px;
+  width: 150px;
+  height: 150px;
   border-radius: 50%;
   object-fit: cover;
-  border: 3px solid #ff6b6b;
-  box-shadow: 0 0 20px rgba(255, 107, 107, 0.3);
+  border: 5px solid #ff6b6b;
+  box-shadow: 0 0 30px rgba(255, 107, 107, 0.5), 0 0 60px rgba(255, 107, 107, 0.2);
+  transition: all 0.3s ease;
+}
+
+.profile-image img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 40px rgba(255, 107, 107, 0.7), 0 0 80px rgba(255, 107, 107, 0.3);
 }
 
 .profile-info h2 {
@@ -880,6 +887,26 @@ body {
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
 
+.project-image {
+  width: 100%;
+  height: 200px;
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.project-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.project-item:hover .project-image img {
+  transform: scale(1.05);
+}
+
 .project-header {
   display: flex;
   align-items: center;
@@ -1012,6 +1039,142 @@ body {
   line-height: 1.6;
   margin: 8px 0;
   opacity: 0.8;
+}
+
+/* Education Images with Hover Effects */
+.education-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 25px;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.education-image {
+  width: 300px;
+  height: 300px;
+  border-radius: 30px;
+  border: 3px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 20px;
+  margin: -20px;
+  backdrop-filter: blur(5px);
+  flex-shrink: 0;
+}
+
+.education-image::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg, rgba(69, 183, 209, 0.1), rgba(150, 206, 180, 0.1));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 1;
+  border-radius: 30px;
+}
+
+.education-img {
+  width: calc(100% - 40px);
+  height: calc(100% - 40px);
+  object-fit: cover;
+  object-position: center;
+  transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  opacity: 0.85;
+  border-radius: 25px;
+  margin: 20px;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.education-header:hover .education-image {
+  transform: scale(1.1) translateY(-10px) translateX(-5px) rotate(2deg);
+  border-color: #45b7d1;
+  box-shadow: 0 15px 30px rgba(69, 183, 209, 0.4), 0 0 25px rgba(69, 183, 209, 0.2);
+  z-index: 20;
+  overflow: visible;
+  width: 330px;
+  height: 330px;
+  border-radius: 35px;
+}
+
+.education-header:hover .education-image::before {
+  opacity: 1;
+}
+
+.education-header:hover .education-img {
+  opacity: 1;
+  object-fit: contain;
+  border-radius: 28px;
+  margin: 22px;
+  width: calc(100% - 44px);
+  height: calc(100% - 44px);
+}
+
+.education-text {
+  flex: 1;
+  padding-left: 20px;
+}
+
+.education-text h2 {
+  color: white;
+  margin: 0 0 8px 0;
+  font-size: 18px;
+}
+
+.education-text h3 {
+  color: #96ceb4;
+  margin: 0 0 15px 0;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.education-text p {
+  font-size: 14px;
+  line-height: 1.6;
+  margin: 10px 0;
+  opacity: 0.9;
+}
+
+.education-text ul {
+  margin: 15px 0;
+  padding-left: 20px;
+}
+
+.education-text li {
+  font-size: 13px;
+  line-height: 1.6;
+  margin: 8px 0;
+  opacity: 0.8;
+}
+
+/* Mobile responsiveness for education images */
+@media (max-width: 768px) {
+  .education-header {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  
+  .education-image {
+    width: 200px;
+    height: 200px;
+    margin: 0 auto 20px auto;
+  }
+  
+  .education-header:hover .education-image {
+    transform: scale(1.05) translateY(-5px);
+    width: 210px;
+    height: 210px;
+  }
+  
+  .education-text {
+    padding-left: 0;
+  }
 }
 
 /* Certifications */
@@ -1282,24 +1445,33 @@ body {
 
   .main-nav {
     left: 20px;
-    top: 80px;
+    top: 70px;
     transform: none;
     flex-direction: row;
     flex-wrap: wrap;
-    gap: 10px;
+    gap: 8px;
+    max-width: calc(100vw - 40px);
   }
 
   .nav-item {
-    width: 140px;
-    padding: 10px 15px;
+    width: 120px;
+    padding: 8px 12px;
+    font-size: 14px;
+  }
+
+  .nav-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
   }
 
   .nav-info h3 {
-    font-size: 10px;
+    font-size: 11px;
+    margin-bottom: 2px;
   }
 
   .nav-info p {
-    font-size: 8px;
+    font-size: 9px;
   }
 
   .panel {
@@ -1310,18 +1482,32 @@ body {
   .panel-content {
     padding: 40px 20px 20px;
     justify-content: flex-start;
-    padding-top: 120px;
+    padding-top: 160px;
   }
 
   .close-btn {
     top: 20px;
     right: 20px;
-    width: 45px;
-    height: 45px;
+    width: 40px;
+    height: 40px;
+    font-size: 18px;
+  }
+
+  .profile-section {
+    flex-direction: column;
+    text-align: center;
+    gap: 15px;
+  }
+
+  .profile-image img {
+    width: 100px;
+    height: 100px;
+    border: 3px solid #ff6b6b;
   }
 
   .stats-grid {
     grid-template-columns: 1fr;
+    gap: 15px;
   }
 
   .skills-grid {
@@ -1354,50 +1540,75 @@ body {
   /* Hero Section Mobile */
   .hero-section {
     left: 50%;
-    top: 45%;
+    top: 50%;
     max-width: 90%;
+    padding: 0 10px;
   }
   
   .hero-title {
-    font-size: 2rem;
+    font-size: 1.8rem;
     line-height: 1.1;
+    margin-bottom: 0.8rem;
   }
   
   .hero-subtitle {
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     margin-bottom: 1.5rem;
     letter-spacing: 0.5px;
   }
   
   .cta-button {
     padding: 12px 24px;
-    font-size: 1rem;
+    font-size: 0.95rem;
   }
   
   /* Space Objects Mobile */
   .asteroid-1 {
-    width: 30px;
-    height: 30px;
+    width: 25px;
+    height: 25px;
     top: 12%;
-    left: 20%;
+    left: 15%;
   }
   
   .satellite-1 {
-    width: 45px;
-    height: 25px;
-    top: 85%;
-    left: 55%;
+    width: 35px;
+    height: 35px;
+    top: 88%;
+    left: 70%;
   }
   
   .nebula-1 {
-    width: 60px;
-    height: 40px;
-    top: 25%;
-    left: 75%;
+    width: 50px;
+    height: 35px;
+    top: 15%;
+    right: 15%;
   }
   
   .object-tooltip {
     font-size: 10px;
-    padding: 6px 10px;
+    padding: 6px 8px;
+    bottom: -35px;
+  }
+
+  /* Project items mobile */
+  .project-item {
+    padding: 20px;
+  }
+
+  .project-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  /* Contact form mobile */
+  .form-group input,
+  .form-group textarea {
+    padding: 12px;
+  }
+
+  .submit-btn {
+    padding: 12px 24px;
+    font-size: 13px;
   }
 }

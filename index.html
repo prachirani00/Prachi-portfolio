@@ -40,11 +40,19 @@
       </div>
     </button>
     
-    <button class="nav-item experience-nav" onclick="showPanel('experience')">
-      <div class="nav-icon experience-icon"></div>
+    <button class="nav-item education-nav" onclick="showPanel('education')">
+      <div class="nav-icon education-icon"></div>
       <div class="nav-info">
-        <h3>Experience</h3>
-        <p>My Journey</p>
+        <h3>Education</h3>
+        <p>Academic Journey</p>
+      </div>
+    </button>
+    
+    <button class="nav-item certificates-nav" onclick="showPanel('certificates')">
+      <div class="nav-icon certificates-icon"></div>
+      <div class="nav-info">
+        <h3>Certificates</h3>
+        <p>Achievements</p>
       </div>
     </button>
     
@@ -60,8 +68,8 @@
   <!-- Hero Section -->
   <div class="hero-section">
     <div class="hero-content">
-      <h1 class="hero-title">Welcome to My Universe</h1>
-      <p class="hero-subtitle">Explore the cosmos of creativity and innovation</p>
+      <h1 class="hero-title">Welcome to the Universe of Ayush Sharawat</h1>
+      <p class="hero-subtitle">Explore the cosmos of creativity and innovation of B.Tech student</p>
       <div class="hero-cta">
         <button class="cta-button" onclick="showPanel('about')">
           <span>Begin Journey</span>
@@ -134,27 +142,8 @@
           <p>Programming Languages</p>
         </div>
         <div class="stat-item">
-          <h3>3+</h3>
+          <h3>4+</h3>
           <p>Major Projects</p>
-        </div>
-      </div>
-
-      <h2>Education</h2>
-      <div class="education-list">
-        <div class="education-item">
-          <h3>B.Tech in Computer Science and Engineering (AI)</h3>
-          <p>KIET Group of Institutions, Ghaziabad (AKTU)</p>
-          <span>Currently Pursuing | CGPA: 7.2</span>
-        </div>
-        <div class="education-item">
-          <h3>Diploma</h3>
-          <p>Government Polytechnic, Ghaziabad (BTEUP)</p>
-          <span>Completed with 70%</span>
-        </div>
-        <div class="education-item">
-          <h3>10th Grade</h3>
-          <p>Dehradun Public School, Ghaziabad (CBSE)</p>
-          <span>Completed with 78.4%</span>
         </div>
       </div>
     </div>
@@ -255,6 +244,34 @@
       <h1><i class="fas fa-laptop-code"></i> Featured Projects</h1>
       
       <div class="project-item">
+        <div class="project-image">
+          <img src="assets/saar.ai.jpg" alt="Saar.ai Project Screenshot">
+        </div>
+        <div class="project-header">
+          <i class="fas fa-brain project-icon"></i>
+          <div>
+            <h2>Saar.ai</h2>
+            <p>AI-powered search engine (Perplexity clone)</p>
+          </div>
+        </div>
+        <p>An intelligent AI-powered search engine inspired by Perplexity, featuring advanced natural language processing and real-time information retrieval. Provides accurate, contextual answers with source citations and an intuitive user interface.</p>
+        <div class="project-tech">
+          <span>AI/ML</span>
+          <span>NLP</span>
+          <span>Python</span>
+          <span>API Integration</span>
+          <span>Real-time Search</span>
+        </div>
+        <div class="project-links">
+          <a href="#" class="project-link" onclick="showLinkComingSoon()"><i class="fas fa-external-link-alt"></i> Live Demo</a>
+          <a href="https://github.com/ayushsharawat/saar.git" class="project-link" target="_blank"><i class="fab fa-github"></i> Source Code</a>
+        </div>
+      </div>
+
+      <div class="project-item">
+        <div class="project-image">
+          <img src="assets/repo-quest.jpg" alt="Repo Quest Project Screenshot">
+        </div>
         <div class="project-header">
           <i class="fas fa-search project-icon"></i>
           <div>
@@ -270,12 +287,15 @@
           <span>GitHub API</span>
         </div>
         <div class="project-links">
-          <a href="#" class="project-link"><i class="fas fa-external-link-alt"></i> Live Demo</a>
-          <a href="#" class="project-link"><i class="fab fa-github"></i> Source Code</a>
+          <a href="#" class="project-link" onclick="showLinkComingSoon()"><i class="fas fa-external-link-alt"></i> Live Demo</a>
+          <a href="#" class="project-link" onclick="showLinkComingSoon()"><i class="fab fa-github"></i> Source Code</a>
         </div>
       </div>
 
       <div class="project-item">
+        <div class="project-image">
+          <img src="assets/blog-manager.jpg" alt="Blog Manager Project Screenshot">
+        </div>
         <div class="project-header">
           <i class="fas fa-blog project-icon"></i>
           <div>
@@ -291,12 +311,15 @@
           <span>Figma</span>
         </div>
         <div class="project-links">
-          <a href="#" class="project-link"><i class="fas fa-external-link-alt"></i> Live Demo</a>
-          <a href="#" class="project-link"><i class="fab fa-github"></i> Source Code</a>
+          <a href="#" class="project-link" onclick="showLinkComingSoon()"><i class="fas fa-external-link-alt"></i> Live Demo</a>
+          <a href="#" class="project-link" onclick="showLinkComingSoon()"><i class="fab fa-github"></i> Source Code</a>
         </div>
       </div>
 
       <div class="project-item">
+        <div class="project-image">
+          <img src="assets/employee-manager.jpg" alt="Employee Manager Project Screenshot">
+        </div>
         <div class="project-header">
           <i class="fas fa-users-cog project-icon"></i>
           <div>
@@ -312,66 +335,92 @@
           <span>CRUD Operations</span>
         </div>
         <div class="project-links">
-          <a href="#" class="project-link"><i class="fas fa-external-link-alt"></i> Live Demo</a>
-          <a href="#" class="project-link"><i class="fab fa-github"></i> Source Code</a>
+          <a href="#" class="project-link" onclick="showLinkComingSoon()"><i class="fas fa-external-link-alt"></i> Live Demo</a>
+          <a href="#" class="project-link" onclick="showLinkComingSoon()"><i class="fab fa-github"></i> Source Code</a>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="panel experience-panel" id="experience-panel">
+  <div class="panel education-panel" id="education-panel">
     <button class="close-btn" onclick="closePanel()">&times;</button>
     <div class="panel-content">
-      <h1><i class="fas fa-graduation-cap"></i> Education & Experience</h1>
+      <h1><i class="fas fa-graduation-cap"></i> Education</h1>
       
       <div class="timeline">
         <div class="timeline-item">
           <div class="timeline-date">2021 - Present</div>
           <div class="timeline-content">
-            <h2>B.Tech Computer Science Engineering (AI)</h2>
-            <h3>KIET Group of Institutions, Ghaziabad</h3>
-            <p>Currently pursuing Bachelor's degree in Computer Science Engineering with specialization in Artificial Intelligence. Focusing on advanced programming concepts, AI/ML algorithms, and software development practices.</p>
-            <ul>
-              <li>Current CGPA: 7.2</li>
-              <li>Specialized coursework in AI and Machine Learning</li>
-              <li>Developed multiple projects using Python, Java, and C</li>
-              <li>Active participation in coding competitions</li>
-            </ul>
+            <div class="education-header">
+              <div class="education-image">
+                <img src="assets/btech.png" alt="B.Tech" class="education-img">
+              </div>
+              <div class="education-text">
+                <h2>B.Tech Computer Science Engineering (AI)</h2>
+                <h3>KIET Group of Institutions, Ghaziabad</h3>
+                <p>Currently pursuing Bachelor's degree in Computer Science Engineering with specialization in Artificial Intelligence. Focusing on advanced programming concepts, AI/ML algorithms, and software development practices.</p>
+                <ul>
+                  <li>Current CGPA: 7.2</li>
+                  <li>Specialized coursework in AI and Machine Learning</li>
+                  <li>Developed multiple projects using Python, Java, and C</li>
+                  <li>Active participation in coding competitions</li>
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
 
         <div class="timeline-item">
           <div class="timeline-date">2018 - 2021</div>
           <div class="timeline-content">
-            <h2>Diploma in Engineering</h2>
-            <h3>Government Polytechnic, Ghaziabad</h3>
-            <p>Completed diploma from Board of Technical Education Uttar Pradesh (BTEUP) with strong foundation in engineering principles and technical skills.</p>
-            <ul>
-              <li>Achieved 70% aggregate marks</li>
-              <li>Strong foundation in engineering mathematics</li>
-              <li>Hands-on experience with technical projects</li>
-            </ul>
+            <div class="education-header">
+              <div class="education-image">
+                <img src="assets/diploma.png" alt="Diploma" class="education-img">
+              </div>
+              <div class="education-text">
+                <h2>Diploma in Engineering</h2>
+                <h3>Government Polytechnic, Ghaziabad</h3>
+                <p>Completed diploma from Board of Technical Education Uttar Pradesh (BTEUP) with strong foundation in engineering principles and technical skills.</p>
+                <ul>
+                  <li>Achieved 70% aggregate marks</li>
+                  <li>Strong foundation in engineering mathematics</li>
+                  <li>Hands-on experience with technical projects</li>
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
 
         <div class="timeline-item">
           <div class="timeline-date">2017 - 2018</div>
           <div class="timeline-content">
-            <h2>Secondary Education (10th Grade)</h2>
-            <h3>Dehradun Public School, Ghaziabad</h3>
-            <p>Completed secondary education from CBSE board with excellent academic performance.</p>
-            <ul>
-              <li>Achieved 78.4% in CBSE Board Examination</li>
-              <li>Strong performance in Mathematics and Science</li>
-              <li>Developed early interest in technology</li>
-            </ul>
+            <div class="education-header">
+              <div class="education-image">
+                <img src="assets/school.png" alt="School" class="education-img">
+              </div>
+              <div class="education-text">
+                <h2>Secondary Education (10th Grade)</h2>
+                <h3>Dehradun Public School, Ghaziabad</h3>
+                <p>Completed secondary education from CBSE board with excellent academic performance.</p>
+                <ul>
+                  <li>Achieved 78.4% in CBSE Board Examination</li>
+                  <li>Strong performance in Mathematics and Science</li>
+                  <li>Developed early interest in technology</li>
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
       </div>
+    </div>
+  </div>
 
+  <div class="panel certificates-panel" id="certificates-panel">
+    <button class="close-btn" onclick="closePanel()">&times;</button>
+    <div class="panel-content">
+      <h1><i class="fas fa-certificate"></i> Certifications & Achievements</h1>
+      
       <div class="certifications">
-        <h2>Certifications & Achievements</h2>
-        
         <div class="cert-item">
           <i class="fab fa-aws"></i>
           <div>

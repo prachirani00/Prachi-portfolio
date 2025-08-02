@@ -55,6 +55,14 @@ function closePanel() {
 window.showPanel = showPanel;
 window.closePanel = closePanel;
 
+// Function to show "Link coming soon" popup for projects
+function showLinkComingSoon() {
+  alert('Link will be added soon! 🚀');
+}
+
+// Make showLinkComingSoon globally available
+window.showLinkComingSoon = showLinkComingSoon;
+
 // Theme toggle functionality
 
 // Theme toggle functionality (if theme toggle exists)
@@ -130,10 +138,10 @@ function initializeSpaceObjects() {
     });
   }
   
-  // Nebula clicks - show experience
+  // Nebula clicks - show education
   if (nebula) {
     nebula.addEventListener('click', () => {
-      showPanel('experience');
+      showPanel('education');
       nebula.style.filter = 'blur(0px) brightness(2)';
       setTimeout(() => {
         nebula.style.filter = '';
