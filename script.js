@@ -40,6 +40,19 @@ document.addEventListener('DOMContentLoaded', function() {
   }, 1800);
 });
 
+// Mobile detection and optimizations
+const isMobile = window.innerWidth <= 768 || /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+const isSmallMobile = window.innerWidth <= 480;
+
+// Mobile-specific settings
+const mobileSettings = {
+  starCount: isMobile ? (isSmallMobile ? 400 : 800) : 1600, // Doubled star count for more density
+  enableStarInteraction: !isMobile, // Disable star interaction on mobile
+  reducedAnimations: isMobile // Reduce animations on mobile
+};
+
+console.log('📱 Mobile detection:', { isMobile, isSmallMobile, settings: mobileSettings });
+
 const themeToggle = document.getElementById('theme-toggle');
 const body = document.body;
 
@@ -853,9 +866,9 @@ class InteractiveStarsController {
     this.maxRepelDistance = 150; // Increased from 100
     this.repelStrength = 0.8; // Increased from 0.3
     this.starCount = {
-      small: 80,  // Increased from 50
-      medium: 50, // Increased from 30
-      large: 30   // Increased from 20
+      small: 160,  // Doubled from 80
+      medium: 100, // Doubled from 50  
+      large: 60    // Doubled from 30
     };
     
     this.init();
@@ -1090,12 +1103,6 @@ class InteractiveStarsController {
 document.addEventListener('DOMContentLoaded', () => {
   console.log('🚀 DOM loaded, creating test stars...');
   
-  // Update debug info
-  const debugInfo = document.getElementById('debug-info');
-  if (debugInfo) {
-    debugInfo.textContent = 'Debug: DOM loaded, creating stars...';
-  }
-  
   // Wait a bit for everything to load
   setTimeout(() => {
     createInteractiveStars();
@@ -1105,12 +1112,10 @@ document.addEventListener('DOMContentLoaded', () => {
 function createInteractiveStars() {
   console.log('🌟 Creating interactive stars...');
   
-  const debugInfo = document.getElementById('debug-info');
   const starsContainer = document.querySelector('.stars-container');
   
   if (!starsContainer) {
     console.error('❌ Stars container not found!');
-    if (debugInfo) debugInfo.textContent = 'Debug: ❌ Stars container not found!';
     return;
   }
   
@@ -1122,8 +1127,8 @@ function createInteractiveStars() {
   let mouseX = window.innerWidth / 2;
   let mouseY = window.innerHeight / 2;
   
-  // Create 800 stars for a massive deep-space starfield (increased from 400)
-  for (let i = 0; i < 800; i++) {
+  // Create mobile-optimized star count for better performance
+  for (let i = 0; i < mobileSettings.starCount; i++) {
     const star = document.createElement('div');
     star.className = 'test-star';
     
@@ -1131,38 +1136,53 @@ function createInteractiveStars() {
     const x = Math.random() * window.innerWidth;
     const y = Math.random() * window.innerHeight;
     
-    // Deep space star distribution - mostly invisible cosmic dust with few bright stars
+    // Deep space star distribution - realistic density with more variety
     let starSize, opacity;
     const sizeRandom = Math.random();
     
-    if (sizeRandom < 0.80) {
-      // 80% cosmic dust particles (0.2-0.8px) - barely visible
-      starSize = Math.random() * 0.6 + 0.2;
-      opacity = Math.random() * 0.2 + 0.1; // Almost invisible
-    } else if (sizeRandom < 0.94) {
-      // 14% distant micro stars (0.6-1.5px)
+    if (sizeRandom < 0.75) {
+      // 75% cosmic dust particles (0.1-0.8px) - barely visible background
+      starSize = Math.random() * 0.7 + 0.1;
+      opacity = Math.random() * 0.15 + 0.05; // Almost invisible
+    } else if (sizeRandom < 0.90) {
+      // 15% distant micro stars (0.6-1.5px)
       starSize = Math.random() * 0.9 + 0.6;
-      opacity = Math.random() * 0.3 + 0.25; // Very faint
-    } else if (sizeRandom < 0.985) {
-      // 4.5% visible stars (1.2-2.8px)
-      starSize = Math.random() * 1.6 + 1.2;
-      opacity = Math.random() * 0.4 + 0.45; // Noticeable
+      opacity = Math.random() * 0.3 + 0.2; // Very faint
+    } else if (sizeRandom < 0.975) {
+      // 7.5% visible stars (1.0-2.5px)
+      starSize = Math.random() * 1.5 + 1.0;
+      opacity = Math.random() * 0.4 + 0.4; // Noticeable
+    } else if (sizeRandom < 0.995) {
+      // 2% bright stars (2.0-3.5px)
+      starSize = Math.random() * 1.5 + 2.0;
+      opacity = Math.random() * 0.3 + 0.6; // Bright focal points
     } else {
-      // 1.5% prominent stellar objects (2.2-4.5px)
-      starSize = Math.random() * 2.3 + 2.2;
-      opacity = Math.random() * 0.3 + 0.65; // Bright focal points
+      // 0.5% brilliant stellar objects (3.0-5.0px)
+      starSize = Math.random() * 2.0 + 3.0;
+      opacity = Math.random() * 0.2 + 0.75; // Very bright
     }
     
-    // Style the star with variable size and opacity
+    // Add subtle color variation for realism
+    const colorVariation = Math.random();
+    let starColor = '#fff';
+    if (colorVariation < 0.05) {
+      starColor = '#ffffcc'; // Slightly yellowish (5%)
+    } else if (colorVariation < 0.08) {
+      starColor = '#ccddff'; // Slightly bluish (3%)
+    }
+    
+    // Style the star with variable size, opacity, and enhanced glow
     star.style.cssText = `
       position: absolute;
       left: ${x}px;
       top: ${y}px;
       width: ${starSize}px;
       height: ${starSize}px;
-      background: #fff;
+      background: ${starColor};
       border-radius: 50%;
-      box-shadow: 0 0 ${starSize * 2}px rgba(255,255,255,${opacity * 0.8}), 0 0 ${starSize * 4}px rgba(255,255,255,${opacity * 0.3});
+      box-shadow: 0 0 ${starSize * 2}px rgba(255,255,255,${opacity * 0.6}), 
+                  0 0 ${starSize * 4}px rgba(255,255,255,${opacity * 0.2}),
+                  0 0 ${starSize * 6}px rgba(255,255,255,${opacity * 0.1});
       z-index: 10;
       pointer-events: none;
       opacity: ${opacity};
@@ -1182,25 +1202,32 @@ function createInteractiveStars() {
     });
   }
   
-  console.log(`✅ Created ${stars.length} test stars`);
-  if (debugInfo) {
-    debugInfo.innerHTML = `Debug: Created ${stars.length} stars<br>Move mouse to see repulsion!`;
+  console.log(`✅ Created ${stars.length} mobile-optimized stars`);
+  
+  // Mouse and touch tracking (optimized for mobile)
+  if (mobileSettings.enableStarInteraction) {
+    document.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+    });
+    
+    // Add touch support for tablets
+    document.addEventListener('touchmove', (e) => {
+      if (e.touches.length > 0) {
+        mouseX = e.touches[0].clientX;
+        mouseY = e.touches[0].clientY;
+      }
+    });
   }
   
-  // Mouse tracking
-  document.addEventListener('mousemove', (e) => {
-    mouseX = e.clientX;
-    mouseY = e.clientY;
-    
-    // Update debug info with mouse position
-    if (debugInfo) {
-      debugInfo.innerHTML = `Stars: ${stars.length}<br>Mouse: ${Math.round(mouseX)}, ${Math.round(mouseY)}<br>Repulsion active!`;
-    }
-  });
-  
-  // Animation loop
+  // Mobile-optimized animation loop
   function animate() {
     stars.forEach(starData => {
+      // Skip repulsion calculations on mobile for better performance
+      if (!mobileSettings.enableStarInteraction) {
+        return; // Stars remain static on mobile
+      }
+      
       const deltaX = mouseX - starData.originalX;
       const deltaY = mouseY - starData.originalY;
       const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
