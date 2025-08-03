@@ -1158,33 +1158,34 @@ body {
 @media (max-width: 768px) {
   /* Mobile Body Adjustments */
   body {
-    overflow-x: hidden;
-    position: relative;
-    min-height: 100vh;
-    padding-bottom: 80px; /* Increased space for bottom nav */
+    overflow-x: hidden !important;
+    position: relative !important;
+    min-height: 100vh !important;
+    padding-bottom: 80px !important; /* Increased space for bottom nav */
   }
   
   /* Mobile Navigation */
   .main-nav {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    top: auto;
-    transform: none;
-    background: rgba(0, 0, 0, 0.98);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    padding: 12px 8px;
-    border-top: 2px solid rgba(0, 255, 65, 0.4);
-    z-index: 300;
-    width: 100vw;
-    height: 80px;
-    box-sizing: border-box;
-    box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.3);
+    position: fixed !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    top: auto !important;
+    transform: none !important;
+    background: rgba(0, 0, 0, 0.98) !important;
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+    flex-direction: row !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    padding: 12px 8px !important;
+    border-top: 2px solid rgba(0, 255, 65, 0.4) !important;
+    z-index: 9999 !important;
+    width: 100vw !important;
+    height: 80px !important;
+    box-sizing: border-box !important;
+    box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.3) !important;
+    margin: 0 !important;
   }
   
   .nav-item {
@@ -1283,17 +1284,17 @@ body {
   
   /* Mobile Main Content */
   .main-content {
-    position: relative;
-    width: 100vw;
-    top: 0;
-    right: auto;
-    height: calc(100vh - 80px); /* Account for bottom nav */
-    margin-top: 0;
-    padding-bottom: 80px; /* Space for bottom nav */
-    overflow-x: hidden;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-    box-sizing: border-box;
+    position: relative !important;
+    width: 100vw !important;
+    top: 0 !important;
+    right: auto !important;
+    height: calc(100vh - 80px) !important; /* Account for bottom nav */
+    margin-top: 0 !important;
+    padding-bottom: 100px !important; /* Extra space for bottom nav */
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    box-sizing: border-box !important;
   }
   
   /* Mobile Content Sections */
@@ -1411,7 +1412,7 @@ body {
 @media (max-width: 480px) {
   /* Extra small mobile adjustments */
   body {
-    padding-bottom: 80px;
+    padding-bottom: 100px !important;
   }
   
   .logo {
@@ -1429,8 +1430,11 @@ body {
   
   /* Small Mobile Navigation */
   .main-nav {
-    height: 80px;
-    padding: 10px 4px;
+    height: 80px !important;
+    padding: 10px 4px !important;
+    position: fixed !important;
+    bottom: 0 !important;
+    z-index: 9999 !important;
   }
   
   .nav-item {
@@ -1457,8 +1461,8 @@ body {
   
   /* Mobile Main Content */
   .main-content {
-    height: calc(100vh - 80px);
-    padding-bottom: 80px;
+    height: calc(100vh - 80px) !important;
+    padding-bottom: 100px !important;
   }
   
   .content-section {
@@ -1540,8 +1544,7 @@ body {
   }
   
   /* Mobile Education Section - Swipe Carousel */
-  .education-grid,
-  .education-timeline {
+  .timeline {
     display: flex;
     overflow-x: auto;
     gap: 20px;
@@ -1552,19 +1555,41 @@ body {
     -ms-overflow-style: none;
   }
   
-  .education-grid::-webkit-scrollbar,
-  .education-timeline::-webkit-scrollbar {
+  .timeline::-webkit-scrollbar {
     display: none;
   }
   
-  .education-item {
+  .timeline::before {
+    display: none; /* Hide vertical timeline line on mobile */
+  }
+  
+  .timeline-item {
     flex: 0 0 280px;
     scroll-snap-align: center;
     margin-bottom: 0;
+    padding: 30px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-left: 4px solid #ff6b6b;
+    transition: all 0.3s ease;
+    position: relative;
+  }
+  
+  .timeline-item::before {
+    display: none; /* Hide timeline dots on mobile */
+  }
+  
+  .timeline-item:hover {
+    background: rgba(255, 255, 255, 0.08);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    border-left-color: #ff8a8a;
+    border-left-width: 6px;
   }
   
   /* Mobile Certificates Section - Swipe Carousel */
-  .certificates-grid {
+  .certifications {
     display: flex;
     overflow-x: auto;
     gap: 20px;
@@ -1575,39 +1600,67 @@ body {
     -ms-overflow-style: none;
   }
   
-  .certificates-grid::-webkit-scrollbar {
+  .certifications::-webkit-scrollbar {
     display: none;
   }
   
   .cert-item {
     flex: 0 0 280px;
     scroll-snap-align: center;
+    padding: 30px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-left: 4px solid #dc2626;
+    transition: all 0.3s ease;
+    position: relative;
   }
   
-  /* Swipe Indicators */
+  .cert-item:hover {
+    background: rgba(255, 255, 255, 0.08);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    border-left-color: #ef4444;
+    border-left-width: 6px;
+  }
+  
+  /* Swipe Indicators - Mobile Only */
   .swipe-indicators {
-    display: flex;
+    display: flex !important;
     justify-content: center;
-    gap: 8px;
-    margin-top: 20px;
-    padding: 0 15px;
+    gap: 10px;
+    margin: 25px 0 15px 0;
+    padding: 10px 15px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 25px;
+    backdrop-filter: blur(10px);
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
   }
   
   .swipe-dot {
-    width: 8px;
-    height: 8px;
+    width: 10px;
+    height: 10px;
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.4);
     transition: all 0.3s ease;
     cursor: pointer;
+    border: 2px solid rgba(255, 255, 255, 0.2);
   }
   
   .swipe-dot.active {
     background: #feca57;
-    box-shadow: 0 0 10px rgba(254, 202, 87, 0.5);
-    transform: scale(1.2);
+    box-shadow: 0 0 15px rgba(254, 202, 87, 0.8);
+    transform: scale(1.3);
+    border-color: #feca57;
   }
   
+  .swipe-dot:hover {
+    background: rgba(255, 255, 255, 0.7);
+    transform: scale(1.1);
+  }
+
   /* Mobile Contact Section */
   .contact-form {
     padding: 20px 15px;
@@ -1685,6 +1738,13 @@ body {
   
   .resume-link i {
     font-size: 14px;
+  }
+}
+
+/* Hide swipe indicators on desktop */
+@media (min-width: 769px) {
+  .swipe-indicators {
+    display: none !important;
   }
 }
 
@@ -1879,9 +1939,10 @@ body {
 /* Profile Actions */
 .profile-actions {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
+  align-items: center;
   margin-top: 20px;
-  width: 100%;
+  width: auto;
 }
 
 .resume-link {
@@ -3067,6 +3128,8 @@ body {
   /* Remove hover effects on mobile */
   .content-section:hover,
   .project-item:hover,
+  .timeline-item:hover,
+  .cert-item:hover,
   .skill-item:hover,
   .profile-section:hover,
   .nav-item:hover {
@@ -3078,6 +3141,15 @@ body {
   .profile-section:hover {
     transform: translateY(-2px) !important;
     background: rgba(255, 255, 255, 0.08) !important;
+  }
+  
+  /* Mobile-specific hover for carousel items */
+  .project-item:hover,
+  .timeline-item:hover,
+  .cert-item:hover {
+    transform: translateY(-3px) !important;
+    background: rgba(255, 255, 255, 0.08) !important;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3) !important;
   }
 
   /* Ensure proper scrolling */
@@ -3428,8 +3500,7 @@ body {
   }
   
   /* Mobile Education Section - Small Mobile Swipe Carousel */
-  .education-grid,
-  .education-timeline {
+  .timeline {
     display: flex;
     flex-direction: row;
     overflow-x: auto;
@@ -3441,18 +3512,40 @@ body {
     -ms-overflow-style: none;
   }
   
-  .education-grid::-webkit-scrollbar,
-  .education-timeline::-webkit-scrollbar {
+  .timeline::-webkit-scrollbar {
     display: none;
   }
   
-  .education-item {
+  .timeline::before {
+    display: none; /* Hide vertical timeline line on small mobile */
+  }
+  
+  .timeline-item {
     flex: 0 0 260px;
     scroll-snap-align: start;
+    padding: 20px 15px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-left: 4px solid #ff6b6b;
+    transition: all 0.3s ease;
+    position: relative;
+  }
+  
+  .timeline-item::before {
+    display: none; /* Hide timeline dots on small mobile */
+  }
+  
+  .timeline-item:hover {
+    background: rgba(255, 255, 255, 0.08);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    border-left-color: #ff8a8a;
+    border-left-width: 6px;
   }
   
   /* Mobile Certificates Section - Small Mobile Swipe Carousel */
-  .certificates-grid {
+  .certifications {
     display: flex;
     flex-direction: row;
     overflow-x: auto;
@@ -3464,13 +3557,28 @@ body {
     -ms-overflow-style: none;
   }
   
-  .certificates-grid::-webkit-scrollbar {
+  .certifications::-webkit-scrollbar {
     display: none;
   }
   
   .cert-item {
     flex: 0 0 260px;
     scroll-snap-align: start;
+    padding: 20px 15px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-left: 4px solid #dc2626;
+    transition: all 0.3s ease;
+    position: relative;
+  }
+  
+  .cert-item:hover {
+    background: rgba(255, 255, 255, 0.08);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    border-left-color: #ef4444;
+    border-left-width: 6px;
   }
   
   /* Smaller indicators for small mobile */

@@ -4,8 +4,8 @@
 window.addEventListener('load', function() {
   const loadingScreen = document.getElementById('loading-screen');
   
-  // Minimum loading time of 1.5 seconds for better experience
-  const minLoadTime = 1500;
+  // Mobile-optimized loading time - longer for mobile to see animation
+  const minLoadTime = isMobile ? 3000 : 1500; // 3 seconds for mobile, 1.5 for desktop
   const startTime = Date.now();
   
   function hideLoadingScreen() {
@@ -34,10 +34,11 @@ document.addEventListener('DOMContentLoaded', function() {
     document.body.style.overflow = 'hidden';
   }
   
-  // Re-enable scroll when loading is complete
+  // Re-enable scroll when loading is complete - longer for mobile
+  const scrollTimeout = isMobile ? 3300 : 1800;
   setTimeout(() => {
     document.body.style.overflow = '';
-  }, 1800);
+  }, scrollTimeout);
 });
 
 // Mobile detection and optimizations
@@ -47,7 +48,7 @@ const isSmallMobile = window.innerWidth <= 480;
 // Mobile-specific settings
 const mobileSettings = {
   starCount: isMobile ? (isSmallMobile ? 200 : 400) : 1600, // Reduced star count for better performance
-  enableStarInteraction: false, // Disable star interaction on all mobile devices
+  enableStarInteraction: !isMobile, // Enable star interaction on desktop, disable on mobile devices
   reducedAnimations: isMobile, // Reduce animations on mobile
   enableSolarSystemInteraction: !isMobile, // Disable solar system interaction on mobile
   scrollSensitivity: isMobile ? 0.5 : 1.0 // Reduced scroll sensitivity on mobile
@@ -1297,6 +1298,7 @@ function createInteractiveStars() {
   
   // Mouse and touch tracking (optimized for mobile)
   if (mobileSettings.enableStarInteraction) {
+    console.log('🖱️ Setting up mouse tracking for star repelling...');
     document.addEventListener('mousemove', (e) => {
       mouseX = e.clientX;
       mouseY = e.clientY;
@@ -1308,15 +1310,22 @@ function createInteractiveStars() {
         mouseX = e.touches[0].clientX;
         mouseY = e.touches[0].clientY;
       }
-    });
+    }, { passive: true });
+    
+    // Debug mouse position periodically
+    setInterval(() => {
+      console.log(`🖱️ Mouse position: ${mouseX}, ${mouseY}`);
+    }, 5000);
   }
   
-  // Mobile-optimized animation loop
+  // Desktop-optimized animation loop
   function animate() {
-    // Skip animation on mobile for better performance
-    if (!mobileSettings.enableStarInteraction || isMobile) {
+    // Only animate on desktop when star interaction is enabled
+    if (!mobileSettings.enableStarInteraction) {
       return; // Static stars on mobile
     }
+    
+    let repelledStars = 0;
     
     stars.forEach(starData => {
       const deltaX = mouseX - starData.originalX;
@@ -1324,31 +1333,37 @@ function createInteractiveStars() {
       const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
       
       if (distance < 150) {
+        repelledStars++;
         const force = (150 - distance) / 150;
-        const repelX = -(deltaX / distance) * force * 60;
-        const repelY = -(deltaY / distance) * force * 60;
+        const repelX = -(deltaX / distance) * force * 80; // Increased from 60
+        const repelY = -(deltaY / distance) * force * 80; // Increased from 60
         
-        starData.currentX += (repelX - starData.currentX) * 0.3;
-        starData.currentY += (repelY - starData.currentY) * 0.3;
+        starData.currentX += (repelX - starData.currentX) * 0.4; // Increased from 0.3
+        starData.currentY += (repelY - starData.currentY) * 0.4; // Increased from 0.3
         
-        starData.element.style.boxShadow = '0 0 20px rgba(255,255,255,1), 0 0 30px rgba(255,255,255,0.8)';
+        starData.element.style.boxShadow = '0 0 25px rgba(255,255,255,1), 0 0 50px rgba(255,255,255,0.8)';
       } else {
-        starData.currentX *= 0.85;
-        starData.currentY *= 0.85;
+        starData.currentX *= 0.88; // Slightly increased from 0.85
+        starData.currentY *= 0.88; // Slightly increased from 0.85
         
-        starData.element.style.boxShadow = '0 0 12px rgba(255,255,255,1), 0 0 20px rgba(255,255,255,0.5)';
+        starData.element.style.boxShadow = '0 0 15px rgba(255,255,255,1), 0 0 25px rgba(255,255,255,0.5)';
       }
       
       starData.element.style.transform = `translate(${starData.currentX}px, ${starData.currentY}px)`;
     });
     
+    // Debug repelled stars count occasionally
+    if (repelledStars > 0 && Math.random() < 0.01) {
+      console.log(`⭐ ${repelledStars} stars being repelled`);
+    }
+    
     requestAnimationFrame(animate);
   }
   
-  // Start animation only on desktop
-  if (!isMobile) {
+  // Start animation based on device capabilities
+  if (mobileSettings.enableStarInteraction) {
     animate();
-    console.log('🎬 Desktop animation started');
+    console.log('🎬 Desktop star animation started with repelling effect');
   } else {
     console.log('📱 Mobile: Static stars for better performance');
   }
@@ -1366,21 +1381,32 @@ function createInteractiveStars() {
 
 // Mobile Swipe Carousel Functionality
 function initializeSwipeCarousels() {
-  if (!isMobile) return; // Only run on mobile
+  // Force mobile behavior for testing or actual mobile detection
+  const shouldShowCarousels = isMobile || window.innerWidth <= 768;
+  if (!shouldShowCarousels) return; // Only run on mobile or small screens
+  
+  console.log('🎯 Initializing swipe carousels...', { isMobile, windowWidth: window.innerWidth });
   
   const carousels = [
     { container: '.projects-grid', itemSelector: '.project-item' },
-    { container: '.education-grid', itemSelector: '.education-item' },
-    { container: '.education-timeline', itemSelector: '.education-item' },
-    { container: '.certificates-grid', itemSelector: '.cert-item' }
+    { container: '.timeline', itemSelector: '.timeline-item' },
+    { container: '.certifications', itemSelector: '.cert-item' }
   ];
   
   carousels.forEach(carousel => {
     const container = document.querySelector(carousel.container);
+    console.log(`🔍 Checking carousel: ${carousel.container}`, container);
     if (!container) return;
     
     const items = container.querySelectorAll(carousel.itemSelector);
+    console.log(`📦 Found ${items.length} items in ${carousel.container}`);
     if (items.length <= 1) return; // No need for indicators if only one item
+    
+    // Remove existing indicators if any
+    const existingIndicators = container.parentNode.querySelector('.swipe-indicators');
+    if (existingIndicators) {
+      existingIndicators.remove();
+    }
     
     // Create indicators container
     const indicatorsContainer = document.createElement('div');
@@ -1396,12 +1422,13 @@ function initializeSwipeCarousels() {
     
     // Insert indicators after the container
     container.parentNode.insertBefore(indicatorsContainer, container.nextSibling);
+    console.log(`✅ Created ${items.length} dots for ${carousel.container}`);
     
     // Update active dot based on scroll position
     function updateActiveDot() {
       const scrollLeft = container.scrollLeft;
       const itemWidth = items[0].offsetWidth;
-      const gap = parseInt(getComputedStyle(container).gap) || 15;
+      const gap = parseInt(getComputedStyle(container).gap) || 20;
       const totalItemWidth = itemWidth + gap;
       
       // Calculate which item is most visible
@@ -1413,6 +1440,8 @@ function initializeSwipeCarousels() {
       dots.forEach((dot, index) => {
         dot.classList.toggle('active', index === clampedIndex);
       });
+      
+      console.log(`🎯 Updated active dot to index ${clampedIndex}`);
     }
     
     // Listen for scroll events with throttling
@@ -1427,26 +1456,35 @@ function initializeSwipeCarousels() {
     dots.forEach((dot, index) => {
       dot.addEventListener('click', () => {
         const itemWidth = items[0].offsetWidth;
-        const gap = parseInt(getComputedStyle(container).gap) || 15;
+        const gap = parseInt(getComputedStyle(container).gap) || 20;
         const scrollPosition = index * (itemWidth + gap);
         
         container.scrollTo({
           left: scrollPosition,
           behavior: 'smooth'
         });
+        
+        console.log(`🎯 Clicked dot ${index}, scrolling to position ${scrollPosition}`);
       });
     });
   });
 }
 
 // Initialize swipe carousels when DOM is loaded
-document.addEventListener('DOMContentLoaded', initializeSwipeCarousels);
+document.addEventListener('DOMContentLoaded', () => {
+  // Delay initialization to ensure all elements are ready
+  setTimeout(initializeSwipeCarousels, 1000);
+});
 
 // Re-initialize on window resize (orientation change)
 window.addEventListener('resize', () => {
+  // Clear existing indicators and reinitialize
   setTimeout(() => {
+    const existingIndicators = document.querySelectorAll('.swipe-indicators');
+    existingIndicators.forEach(indicator => indicator.remove());
+    
     if (window.innerWidth <= 768) {
       initializeSwipeCarousels();
     }
-  }, 100);
+  }, 200);
 });
