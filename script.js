@@ -4,8 +4,8 @@
 window.addEventListener('load', function() {
   const loadingScreen = document.getElementById('loading-screen');
   
-  // Mobile-optimized loading time - longer for mobile to see animation
-  const minLoadTime = isMobile ? 3000 : 1500; // 3 seconds for mobile, 1.5 for desktop
+  // Enhanced mobile-optimized loading time - much longer for mobile to appreciate the animation
+  const minLoadTime = isMobile ? (isSmallMobile ? 5000 : 4500) : 1500; // 5s for small mobile, 4.5s for mobile, 1.5s for desktop
   const startTime = Date.now();
   
   function hideLoadingScreen() {
@@ -15,11 +15,12 @@ window.addEventListener('load', function() {
     setTimeout(() => {
       loadingScreen.classList.add('fade-out');
       
-      // Remove from DOM after fade animation
+      // Longer fade animation for mobile to see the transition
+      const fadeTime = isMobile ? 800 : 300;
       setTimeout(() => {
         loadingScreen.style.display = 'none';
         console.log('🚀 Portfolio loaded successfully!');
-      }, 300);
+      }, fadeTime);
     }, remainingTime);
   }
   
@@ -34,8 +35,8 @@ document.addEventListener('DOMContentLoaded', function() {
     document.body.style.overflow = 'hidden';
   }
   
-  // Re-enable scroll when loading is complete - longer for mobile
-  const scrollTimeout = isMobile ? 3300 : 1800;
+  // Re-enable scroll when loading is complete - much longer for mobile
+  const scrollTimeout = isMobile ? (isSmallMobile ? 5800 : 5300) : 1800; // Increased timeouts for mobile
   setTimeout(() => {
     document.body.style.overflow = '';
   }, scrollTimeout);
@@ -59,7 +60,7 @@ console.log('📱 Mobile detection:', { isMobile, isSmallMobile, settings: mobil
 const themeToggle = document.getElementById('theme-toggle');
 const body = document.body;
 
-// Enhanced Smooth Scrolling Navigation Functions
+// Enhanced Smooth Scrolling Navigation Functions with Mobile Optimizations
 function scrollToSection(sectionName) {
   console.log('scrollToSection called with:', sectionName);
   
@@ -68,10 +69,25 @@ function scrollToSection(sectionName) {
     item.classList.remove('active');
   });
   
-  // Find and activate the target nav item immediately
+  // Find and activate the target nav item immediately with enhanced feedback
   const targetNav = document.querySelector(`.${sectionName}-nav`);
   if (targetNav) {
     targetNav.classList.add('active');
+    
+    // Add enhanced mobile feedback
+    if (isMobile) {
+      // Add haptic feedback if supported
+      if (navigator.vibrate) {
+        navigator.vibrate(50); // Short vibration
+      }
+      
+      // Add visual feedback with scaling animation
+      targetNav.style.transform = 'translateY(-4px) scale(1.02)';
+      setTimeout(() => {
+        targetNav.style.transform = '';
+      }, 200);
+    }
+    
     console.log('Nav activated:', sectionName);
   }
   
@@ -82,11 +98,18 @@ function scrollToSection(sectionName) {
   if (targetSection && mainContent) {
     const sectionTop = targetSection.offsetTop;
     
-    // Add smooth scrolling with a callback to ensure active state persists
-    mainContent.scrollTo({
+    // Enhanced smooth scrolling with mobile optimizations
+    const scrollOptions = {
       top: sectionTop,
       behavior: 'smooth'
-    });
+    };
+    
+    // Add momentum scrolling for iOS
+    if (isMobile && /iPhone|iPad|iPod/.test(navigator.userAgent)) {
+      mainContent.style.webkitOverflowScrolling = 'touch';
+    }
+    
+    mainContent.scrollTo(scrollOptions);
     
     console.log('Scrolled to section:', sectionName);
     
@@ -95,12 +118,133 @@ function scrollToSection(sectionName) {
       if (targetNav && !targetNav.classList.contains('active')) {
         targetNav.classList.add('active');
       }
-    }, 800); // Wait for scroll animation to complete
+    }, isMobile ? 600 : 800); // Faster feedback on mobile
   }
 }
 
 // Make functions globally available
 window.scrollToSection = scrollToSection;
+
+// Enhanced Mobile Touch Interactions
+if (isMobile) {
+  document.addEventListener('DOMContentLoaded', function() {
+    const navItems = document.querySelectorAll('.nav-item');
+    
+    navItems.forEach(navItem => {
+      // Enhanced touch start for immediate feedback
+      navItem.addEventListener('touchstart', function(e) {
+        this.classList.add('touching');
+        this.style.transform = 'translateY(-2px) scale(0.98)';
+        
+        // Prevent default to avoid double-tap zoom
+        e.preventDefault();
+      }, { passive: false });
+      
+      // Touch end cleanup
+      navItem.addEventListener('touchend', function(e) {
+        this.classList.remove('touching');
+        this.style.transform = '';
+        
+        // Add ripple effect
+        createRippleEffect(this, e);
+        
+        e.preventDefault();
+      }, { passive: false });
+      
+      // Touch cancel cleanup
+      navItem.addEventListener('touchcancel', function() {
+        this.classList.remove('touching');
+        this.style.transform = '';
+      });
+    });
+  });
+  
+  // Ripple effect function for enhanced mobile feedback
+  function createRippleEffect(element, event) {
+    const rect = element.getBoundingClientRect();
+    const ripple = document.createElement('span');
+    const size = Math.max(rect.width, rect.height);
+    const x = event.changedTouches[0].clientX - rect.left - size / 2;
+    const y = event.changedTouches[0].clientY - rect.top - size / 2;
+    
+    ripple.style.cssText = `
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.3);
+      transform: scale(0);
+      animation: ripple 0.6s linear;
+      left: ${x}px;
+      top: ${y}px;
+      width: ${size}px;
+      height: ${size}px;
+      pointer-events: none;
+      z-index: 1000;
+    `;
+    
+    element.appendChild(ripple);
+    
+    // Remove ripple after animation
+    setTimeout(() => {
+      if (ripple.parentNode) {
+        ripple.parentNode.removeChild(ripple);
+      }
+    }, 600);
+  }
+  
+  // Add CSS for ripple animation and enhanced mobile styles
+  const style = document.createElement('style');
+  style.textContent = `
+    @keyframes ripple {
+      to {
+        transform: scale(2);
+        opacity: 0;
+      }
+    }
+    .nav-item {
+      position: relative;
+      overflow: hidden;
+    }
+    .touching {
+      transition: transform 0.1s ease-out !important;
+    }
+    
+    /* Enhanced scroll performance for mobile */
+    .main-content {
+      scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch;
+    }
+    
+    /* Improved touch targets for mobile accessibility */
+    @media (max-width: 768px) {
+      .nav-item {
+        min-height: 70px !important;
+        touch-action: manipulation;
+      }
+      
+      .nav-item:focus {
+        outline: 2px solid rgba(254, 202, 87, 0.8);
+        outline-offset: 2px;
+      }
+    }
+  `;
+  document.head.appendChild(style);
+  
+  // Enhanced scroll performance with throttling
+  let isScrolling = false;
+  const mainContent = document.querySelector('.main-content');
+  
+  if (mainContent) {
+    mainContent.addEventListener('scroll', function() {
+      if (!isScrolling) {
+        window.requestAnimationFrame(function() {
+          handleScrollNavigation();
+          isScrolling = false;
+        });
+        isScrolling = true;
+      }
+    }, { passive: true });
+  }
+}
 
 // Message Button Bottom Scroll Handler
 function handleMessageButtonVisibility() {
