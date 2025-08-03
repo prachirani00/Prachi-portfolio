@@ -842,3 +842,411 @@ window.solarSystemControls = {
   toggle: () => solarSystem?.toggle(),
   reset: () => solarSystem?.resetAllElements()
 };
+
+// Interactive Stars with Mouse Repulsion
+class InteractiveStarsController {
+  constructor() {
+    this.stars = [];
+    this.mouseX = 0;
+    this.mouseY = 0;
+    this.isActive = true;
+    this.maxRepelDistance = 150; // Increased from 100
+    this.repelStrength = 0.8; // Increased from 0.3
+    this.starCount = {
+      small: 80,  // Increased from 50
+      medium: 50, // Increased from 30
+      large: 30   // Increased from 20
+    };
+    
+    this.init();
+  }
+  
+  init() {
+    // Wait for DOM to be ready
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', () => this.setup());
+    } else {
+      this.setup();
+    }
+  }
+  
+  setup() {
+    // Clear existing CSS-based stars
+    const starsContainer = document.querySelector('.stars-container');
+    if (!starsContainer) {
+      console.error('❌ Stars container not found!');
+      return;
+    }
+    
+    console.log('🌟 Setting up interactive stars...');
+    
+    // Clear existing stars and replace with interactive ones
+    starsContainer.innerHTML = '';
+    
+    // Create individual star elements
+    this.createStars(starsContainer);
+    
+    // Setup mouse tracking
+    this.setupMouseTracking();
+    
+    // Start animation loop
+    this.animate();
+    
+    console.log('✨ Interactive stars initialized with', this.stars.length, 'stars');
+  }
+  
+  createStars(container) {
+    // Create small stars
+    for (let i = 0; i < this.starCount.small; i++) {
+      this.createStar(container, 'small');
+    }
+    
+    // Create medium stars
+    for (let i = 0; i < this.starCount.medium; i++) {
+      this.createStar(container, 'medium');
+    }
+    
+    // Create large stars
+    for (let i = 0; i < this.starCount.large; i++) {
+      this.createStar(container, 'large');
+    }
+  }
+  
+  createStar(container, size) {
+    const star = document.createElement('div');
+    star.className = `interactive-star star-${size}`;
+    
+    // Random position
+    const x = Math.random() * window.innerWidth;
+    const y = Math.random() * window.innerHeight;
+    
+    // Size and opacity based on star type
+    let starSize, opacity, brightness;
+    switch (size) {
+      case 'small':
+        starSize = Math.random() * 2 + 2; // Increased from 1-3px to 2-4px
+        opacity = Math.random() * 0.4 + 0.4; // Increased from 0.2-0.6 to 0.4-0.8
+        brightness = Math.random() * 0.3 + 0.7; // Increased from 0.5-1 to 0.7-1
+        break;
+      case 'medium':
+        starSize = Math.random() * 2 + 3; // Increased from 2-4px to 3-5px
+        opacity = Math.random() * 0.3 + 0.5; // Increased from 0.4-0.7 to 0.5-0.8
+        brightness = Math.random() * 0.2 + 0.8; // Increased from 0.6-1 to 0.8-1
+        break;
+      case 'large':
+        starSize = Math.random() * 3 + 4; // Increased from 3-5px to 4-7px
+        opacity = Math.random() * 0.2 + 0.7; // Increased from 0.6-0.8 to 0.7-0.9
+        brightness = Math.random() * 0.2 + 0.8; // Increased from 0.7-1 to 0.8-1
+        break;
+    }
+    
+    // Apply styles
+    star.style.cssText = `
+      position: absolute;
+      left: ${x}px;
+      top: ${y}px;
+      width: ${starSize}px;
+      height: ${starSize}px;
+      background: radial-gradient(circle, rgba(255,255,255,${brightness}) 0%, transparent 70%);
+      border-radius: 50%;
+      opacity: ${opacity};
+      pointer-events: none;
+      transition: all 0.1s ease-out;
+      z-index: 1;
+      box-shadow: 0 0 ${starSize}px rgba(255,255,255,0.3);
+    `;
+    
+    container.appendChild(star);
+    
+    // Store star data
+    this.stars.push({
+      element: star,
+      originalX: x,
+      originalY: y,
+      currentX: 0,
+      currentY: 0,
+      size: size,
+      baseOpacity: opacity,
+      baseBrightness: brightness,
+      twinklePhase: Math.random() * Math.PI * 2,
+      twinkleSpeed: Math.random() * 0.02 + 0.01
+    });
+  }
+  
+  setupMouseTracking() {
+    console.log('🖱️ Setting up mouse tracking for stars...');
+    
+    // Track mouse movement
+    document.addEventListener('mousemove', (e) => {
+      this.mouseX = e.clientX;
+      this.mouseY = e.clientY;
+    });
+    
+    // Pause repulsion when mouse leaves window
+    document.addEventListener('mouseleave', () => {
+      console.log('🖱️ Mouse left window - pausing star repulsion');
+      this.isActive = false;
+      this.resetAllStars();
+    });
+    
+    document.addEventListener('mouseenter', () => {
+      console.log('🖱️ Mouse entered window - activating star repulsion');
+      this.isActive = true;
+    });
+  }
+  
+  calculateRepulsion(starData) {
+    if (!this.isActive) return { x: 0, y: 0 };
+    
+    const deltaX = this.mouseX - starData.originalX;
+    const deltaY = this.mouseY - starData.originalY;
+    const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+    
+    if (distance > this.maxRepelDistance) {
+      return { x: 0, y: 0 };
+    }
+    
+    // Calculate repulsion force (stronger when closer)
+    const force = (this.maxRepelDistance - distance) / this.maxRepelDistance;
+    const sizeMultiplier = starData.size === 'large' ? 1.5 : starData.size === 'medium' ? 1.2 : 1;
+    const repelX = -(deltaX / distance) * force * this.repelStrength * sizeMultiplier * 60; // Increased from 30
+    const repelY = -(deltaY / distance) * force * this.repelStrength * sizeMultiplier * 60; // Increased from 30
+    
+    return { x: repelX, y: repelY };
+  }
+  
+  animate() {
+    const time = Date.now() * 0.001;
+    
+    this.stars.forEach(starData => {
+      const repulsion = this.calculateRepulsion(starData);
+      
+      // Smooth transition to new position (more responsive)
+      starData.currentX += (repulsion.x - starData.currentX) * 0.15; // Increased from 0.08
+      starData.currentY += (repulsion.y - starData.currentY) * 0.15; // Increased from 0.08
+      
+      // Calculate twinkle effect
+      const twinkle = Math.sin(time * starData.twinkleSpeed + starData.twinklePhase) * 0.3 + 0.7;
+      const currentOpacity = starData.baseOpacity * twinkle;
+      
+      // Apply transform and effects
+      const transform = `translate(${starData.currentX}px, ${starData.currentY}px)`;
+      starData.element.style.transform = transform;
+      starData.element.style.opacity = currentOpacity;
+      
+      // Add slight brightness boost when repelled
+      const isRepelled = Math.abs(starData.currentX) > 3 || Math.abs(starData.currentY) > 3;
+      if (isRepelled) {
+        starData.element.style.filter = 'brightness(1.5) saturate(1.2)';
+        starData.element.style.boxShadow = `0 0 ${starData.size * 2}px rgba(255,255,255,0.5)`;
+      } else {
+        starData.element.style.filter = '';
+        starData.element.style.boxShadow = '';
+      }
+    });
+    
+    requestAnimationFrame(() => this.animate());
+  }
+  
+  resetAllStars() {
+    this.stars.forEach(starData => {
+      starData.currentX = 0;
+      starData.currentY = 0;
+      starData.element.style.transform = 'translate(0px, 0px)';
+      starData.element.style.filter = '';
+      starData.element.style.boxShadow = '';
+    });
+  }
+  
+  // Public methods for interaction
+  setRepelStrength(strength) {
+    this.repelStrength = Math.max(0, Math.min(2, strength));
+  }
+  
+  setMaxDistance(distance) {
+    this.maxRepelDistance = Math.max(50, Math.min(200, distance));
+  }
+  
+  toggle() {
+    this.isActive = !this.isActive;
+    if (!this.isActive) {
+      this.resetAllStars();
+    }
+  }
+  
+  // Handle window resize
+  handleResize() {
+    // Regenerate stars for new window size
+    const starsContainer = document.querySelector('.stars-container');
+    if (starsContainer) {
+      this.stars = [];
+      starsContainer.innerHTML = '';
+      this.createStars(starsContainer);
+    }
+  }
+}
+
+// Initialize Interactive Stars - Simplified and Direct Approach
+document.addEventListener('DOMContentLoaded', () => {
+  console.log('🚀 DOM loaded, creating test stars...');
+  
+  // Update debug info
+  const debugInfo = document.getElementById('debug-info');
+  if (debugInfo) {
+    debugInfo.textContent = 'Debug: DOM loaded, creating stars...';
+  }
+  
+  // Wait a bit for everything to load
+  setTimeout(() => {
+    createInteractiveStars();
+  }, 500);
+});
+
+function createInteractiveStars() {
+  console.log('🌟 Creating interactive stars...');
+  
+  const debugInfo = document.getElementById('debug-info');
+  const starsContainer = document.querySelector('.stars-container');
+  
+  if (!starsContainer) {
+    console.error('❌ Stars container not found!');
+    if (debugInfo) debugInfo.textContent = 'Debug: ❌ Stars container not found!';
+    return;
+  }
+  
+  // Clear any existing content
+  starsContainer.innerHTML = '';
+  
+  // Create stars array to track them
+  const stars = [];
+  let mouseX = window.innerWidth / 2;
+  let mouseY = window.innerHeight / 2;
+  
+  // Create 800 stars for a massive deep-space starfield (increased from 400)
+  for (let i = 0; i < 800; i++) {
+    const star = document.createElement('div');
+    star.className = 'test-star';
+    
+    // Random position across full screen with some clustering for realism
+    const x = Math.random() * window.innerWidth;
+    const y = Math.random() * window.innerHeight;
+    
+    // Deep space star distribution - mostly invisible cosmic dust with few bright stars
+    let starSize, opacity;
+    const sizeRandom = Math.random();
+    
+    if (sizeRandom < 0.80) {
+      // 80% cosmic dust particles (0.2-0.8px) - barely visible
+      starSize = Math.random() * 0.6 + 0.2;
+      opacity = Math.random() * 0.2 + 0.1; // Almost invisible
+    } else if (sizeRandom < 0.94) {
+      // 14% distant micro stars (0.6-1.5px)
+      starSize = Math.random() * 0.9 + 0.6;
+      opacity = Math.random() * 0.3 + 0.25; // Very faint
+    } else if (sizeRandom < 0.985) {
+      // 4.5% visible stars (1.2-2.8px)
+      starSize = Math.random() * 1.6 + 1.2;
+      opacity = Math.random() * 0.4 + 0.45; // Noticeable
+    } else {
+      // 1.5% prominent stellar objects (2.2-4.5px)
+      starSize = Math.random() * 2.3 + 2.2;
+      opacity = Math.random() * 0.3 + 0.65; // Bright focal points
+    }
+    
+    // Style the star with variable size and opacity
+    star.style.cssText = `
+      position: absolute;
+      left: ${x}px;
+      top: ${y}px;
+      width: ${starSize}px;
+      height: ${starSize}px;
+      background: #fff;
+      border-radius: 50%;
+      box-shadow: 0 0 ${starSize * 2}px rgba(255,255,255,${opacity * 0.8}), 0 0 ${starSize * 4}px rgba(255,255,255,${opacity * 0.3});
+      z-index: 10;
+      pointer-events: none;
+      opacity: ${opacity};
+    `;
+    
+    starsContainer.appendChild(star);
+    
+    // Store star data with size information
+    stars.push({
+      element: star,
+      originalX: x,
+      originalY: y,
+      currentX: 0,
+      currentY: 0,
+      size: starSize,
+      baseOpacity: opacity
+    });
+  }
+  
+  console.log(`✅ Created ${stars.length} test stars`);
+  if (debugInfo) {
+    debugInfo.innerHTML = `Debug: Created ${stars.length} stars<br>Move mouse to see repulsion!`;
+  }
+  
+  // Mouse tracking
+  document.addEventListener('mousemove', (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+    
+    // Update debug info with mouse position
+    if (debugInfo) {
+      debugInfo.innerHTML = `Stars: ${stars.length}<br>Mouse: ${Math.round(mouseX)}, ${Math.round(mouseY)}<br>Repulsion active!`;
+    }
+  });
+  
+  // Animation loop
+  function animate() {
+    stars.forEach(starData => {
+      const deltaX = mouseX - starData.originalX;
+      const deltaY = mouseY - starData.originalY;
+      const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+      
+      if (distance < 150) { // Repel within 150px
+        const force = (150 - distance) / 150;
+        const repelX = -(deltaX / distance) * force * 60; // Strong repulsion
+        const repelY = -(deltaY / distance) * force * 60;
+        
+        starData.currentX += (repelX - starData.currentX) * 0.3; // Fast response
+        starData.currentY += (repelY - starData.currentY) * 0.3;
+        
+        // Visual feedback when repelled
+        starData.element.style.boxShadow = '0 0 20px rgba(255,255,255,1), 0 0 30px rgba(255,255,255,0.8)';
+      } else {
+        // Return to original position
+        starData.currentX *= 0.85;
+        starData.currentY *= 0.85;
+        
+        // Normal glow
+        starData.element.style.boxShadow = '0 0 12px rgba(255,255,255,1), 0 0 20px rgba(255,255,255,0.5)';
+      }
+      
+      // Apply transform
+      starData.element.style.transform = `translate(${starData.currentX}px, ${starData.currentY}px)`;
+    });
+    
+    requestAnimationFrame(animate);
+  }
+  
+  // Start animation
+  animate();
+  console.log('🎬 Animation started');
+  
+  // Global controls for testing
+  window.testStars = {
+    stars: stars,
+    mouseX: () => mouseX,
+    mouseY: () => mouseY,
+    starCount: () => stars.length,
+    forceRepel: () => {
+      stars.forEach(star => {
+        star.currentX = (Math.random() - 0.5) * 100;
+        star.currentY = (Math.random() - 0.5) * 100;
+      });
+      console.log('🔥 Forced star repulsion for testing');
+    }
+  };
+}
