@@ -47,20 +47,12 @@
     <span>Portfolio</span>
   </h1>
 
-  <!-- Navigation Menu with Integrated Planets -->
+  <!-- Navigation Menu -->
   <nav class="main-nav tech-nav">
     <div class="nav-grid-lines"></div>
     <div class="nav-scanner"></div>
     
-    <button class="nav-item about-nav" onclick="scrollToSection('about')" data-planet="mercury">
-      <div class="nav-planet-container">
-        <div class="nav-planet mercury-nav-planet">
-          <div class="planet-surface"></div>
-          <div class="planet-glow"></div>
-        </div>
-        <div class="nav-orbit"></div>
-        <div class="nav-tech-lines"></div>
-      </div>
+        <button class="nav-item about-nav" onclick="scrollToSection('about')" data-section="about">
       <div class="nav-info">
         <h3>About</h3>
         <p>Who I Am</p>
@@ -69,16 +61,7 @@
       <div class="nav-hologram"></div>
     </button>
     
-    <button class="nav-item skills-nav" onclick="scrollToSection('skills')" data-planet="venus">
-      <div class="nav-planet-container">
-        <div class="nav-planet venus-nav-planet">
-          <div class="planet-surface"></div>
-          <div class="planet-atmosphere"></div>
-          <div class="planet-glow"></div>
-        </div>
-        <div class="nav-orbit"></div>
-        <div class="nav-tech-lines"></div>
-      </div>
+        <button class="nav-item skills-nav" onclick="scrollToSection('skills')" data-section="skills">
       <div class="nav-info">
         <h3>Skills</h3>
         <p>What I Do</p>
@@ -87,17 +70,7 @@
       <div class="nav-hologram"></div>
     </button>
     
-    <button class="nav-item projects-nav" onclick="scrollToSection('projects')" data-planet="earth">
-      <div class="nav-planet-container">
-        <div class="nav-planet earth-nav-planet">
-          <div class="planet-surface"></div>
-          <div class="planet-continents"></div>
-          <div class="planet-clouds"></div>
-          <div class="planet-glow"></div>
-        </div>
-        <div class="nav-orbit"></div>
-        <div class="nav-tech-lines"></div>
-      </div>
+        <button class="nav-item projects-nav" onclick="scrollToSection('projects')" data-section="projects">
       <div class="nav-info">
         <h3>Projects</h3>
         <p>What I've Built</p>
@@ -106,16 +79,7 @@
       <div class="nav-hologram"></div>
     </button>
     
-    <button class="nav-item education-nav" onclick="scrollToSection('education')" data-planet="mars">
-      <div class="nav-planet-container">
-        <div class="nav-planet mars-nav-planet">
-          <div class="planet-surface"></div>
-          <div class="planet-terrain"></div>
-          <div class="planet-glow"></div>
-        </div>
-        <div class="nav-orbit"></div>
-        <div class="nav-tech-lines"></div>
-      </div>
+        <button class="nav-item education-nav" onclick="scrollToSection('education')" data-section="education">
       <div class="nav-info">
         <h3>Education</h3>
         <p>Academic Journey</p>
@@ -124,17 +88,7 @@
       <div class="nav-hologram"></div>
     </button>
     
-    <button class="nav-item certificates-nav" onclick="scrollToSection('certificates')" data-planet="jupiter">
-      <div class="nav-planet-container">
-        <div class="nav-planet jupiter-nav-planet">
-          <div class="planet-surface"></div>
-          <div class="planet-bands"></div>
-          <div class="planet-spot"></div>
-          <div class="planet-glow"></div>
-        </div>
-        <div class="nav-orbit"></div>
-        <div class="nav-tech-lines"></div>
-      </div>
+        <button class="nav-item certificates-nav" onclick="scrollToSection('certificates')" data-section="certificates">
       <div class="nav-info">
         <h3>Certificates</h3>
         <p>Achievements</p>
@@ -143,16 +97,7 @@
       <div class="nav-hologram"></div>
     </button>
     
-    <button class="nav-item contact-nav" onclick="scrollToSection('contact')" data-planet="saturn">
-      <div class="nav-planet-container">
-        <div class="nav-planet saturn-nav-planet">
-          <div class="planet-surface"></div>
-          <div class="planet-rings"></div>
-          <div class="planet-glow"></div>
-        </div>
-        <div class="nav-orbit"></div>
-        <div class="nav-tech-lines"></div>
-      </div>
+        <button class="nav-item contact-nav" onclick="scrollToSection('contact')" data-section="contact">
       <div class="nav-info">
         <h3>Contact</h3>
         <p>Get In Touch</p>
@@ -160,96 +105,10 @@
       </div>
       <div class="nav-hologram"></div>
     </button>
-    
-    <!-- Central Sun Element -->
-    <div class="nav-central-sun">
-      <div class="central-sun-body">
-        <div class="sun-core"></div>
-        <div class="sun-flares"></div>
-      </div>
-      <div class="central-tech-ring"></div>
-    </div>
   </nav>
-
-  <!-- Interactive Solar System Elements -->
-  <div class="interactive-solar-system" id="interactiveSolarSystem">
-    <!-- Sun -->
-    <div class="solar-element sun-element" data-repel-strength="100">
-      <div class="solar-body sun-body">
-        <div class="sun-corona"></div>
-        <div class="sun-flare"></div>
-      </div>
-      <div class="element-tooltip">Sun ☀️</div>
-    </div>
-    
-    <!-- Mercury -->
-    <div class="solar-element mercury-element" data-repel-strength="60">
-      <div class="solar-body mercury-body"></div>
-      <div class="element-tooltip">Mercury</div>
-    </div>
-    
-    <!-- Venus -->
-    <div class="solar-element venus-element" data-repel-strength="70">
-      <div class="solar-body venus-body">
-        <div class="venus-atmosphere"></div>
-      </div>
-      <div class="element-tooltip">Venus ♀</div>
-    </div>
-    
-    <!-- Earth -->
-    <div class="solar-element earth-element" data-repel-strength="80">
-      <div class="solar-body earth-body">
-        <div class="earth-continents"></div>
-        <div class="earth-clouds"></div>
-      </div>
-      <div class="element-tooltip">Earth 🌍</div>
-    </div>
-    
-    <!-- Mars -->
-    <div class="solar-element mars-element" data-repel-strength="65">
-      <div class="solar-body mars-body">
-        <div class="mars-surface"></div>
-      </div>
-      <div class="element-tooltip">Mars ♂</div>
-    </div>
-    
-    <!-- Jupiter -->
-    <div class="solar-element jupiter-element" data-repel-strength="120">
-      <div class="solar-body jupiter-body">
-        <div class="jupiter-bands"></div>
-        <div class="jupiter-spot"></div>
-      </div>
-      <div class="element-tooltip">Jupiter ♃</div>
-    </div>
-    
-    <!-- Saturn -->
-    <div class="solar-element saturn-element" data-repel-strength="110">
-      <div class="solar-body saturn-body">
-        <div class="saturn-rings"></div>
-      </div>
-      <div class="element-tooltip">Saturn ♄</div>
-    </div>
-    
-    <!-- Asteroid Belt -->
-    <div class="solar-element asteroid1-element" data-repel-strength="40">
-      <div class="solar-body asteroid-body"></div>
-    </div>
-    <div class="solar-element asteroid2-element" data-repel-strength="35">
-      <div class="solar-body asteroid-body"></div>
-    </div>
-    <div class="solar-element asteroid3-element" data-repel-strength="45">
-      <div class="solar-body asteroid-body"></div>
-    </div>
-  </div>
 
   <!-- Interactive Space Objects -->
   <div class="space-objects">
-    <div class="space-object asteroid-1" data-info="Asteroid Alpha">
-      <div class="object-tooltip">Asteroid Alpha - Click to explore skills</div>
-    </div>
-    <div class="space-object satellite-1" data-info="Planet Mars">
-      <div class="object-tooltip">Planet Mars - View my projects</div>
-    </div>
     <div class="space-object nebula-1" data-info="Nebula Dreams">
       <div class="object-tooltip">Nebula Dreams - Experience my journey</div>
     </div>
@@ -735,7 +594,7 @@
         <div class="social-links">
           <h2>Find Me Online</h2>
           <div class="social-grid">
-            <a href="https://www.linkedin.com/in/ayushsharawat" class="social-link" target="_blank">
+            <a href="https://www.linkedin.com/in/ayush-sharawat/" class="social-link" target="_blank">
               <i class="fab fa-linkedin"></i>
               <span>LinkedIn</span>
             </a>
@@ -743,15 +602,15 @@
               <i class="fab fa-github"></i>
               <span>GitHub</span>
             </a>
-            <a href="https://www.instagram.com/ayushsharawat" class="social-link" target="_blank">
+            <a href="https://www.instagram.com/iussehrawat/" class="social-link" target="_blank">
               <i class="fab fa-instagram"></i>
               <span>Instagram</span>
             </a>
-            <a href="https://x.com/ayushsharawat" class="social-link" target="_blank">
+            <a href="https://x.com/AyushSharawat29" class="social-link" target="_blank">
               <span class="x-icon">𝕏</span>
               <span>X</span>
             </a>
-            <a href="https://discord.gg/yourdiscord" class="social-link" target="_blank">
+            <a href="https://discord.com/users/755696662114074654" class="social-link" target="_blank">
               <i class="fab fa-discord"></i>
               <span>Discord</span>
             </a>
