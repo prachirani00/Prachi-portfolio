@@ -1161,7 +1161,7 @@ body {
     overflow-x: hidden;
     position: relative;
     min-height: 100vh;
-    padding-bottom: 70px; /* Increased space for bottom nav */
+    padding-bottom: 80px; /* Increased space for bottom nav */
   }
   
   /* Mobile Navigation */
@@ -1172,32 +1172,42 @@ body {
     right: 0;
     top: auto;
     transform: none;
-    background: rgba(0, 0, 0, 0.95);
-    backdrop-filter: blur(15px);
+    background: rgba(0, 0, 0, 0.98);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
     flex-direction: row;
-    justify-content: space-around;
-    padding: 10px 5px;
-    border-top: 1px solid rgba(0, 255, 65, 0.3);
-    z-index: 200;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 8px;
+    border-top: 2px solid rgba(0, 255, 65, 0.4);
+    z-index: 300;
     width: 100vw;
-    height: 70px; /* Increased height for better touch targets */
+    height: 80px;
     box-sizing: border-box;
+    box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.3);
   }
   
   .nav-item {
+    display: flex;
     flex-direction: column;
-    padding: 8px 4px;
-    font-size: 10px;
+    justify-content: center;
+    align-items: center;
+    padding: 8px 6px;
+    font-size: 11px;
     text-align: center;
     min-width: 0;
     flex: 1;
     width: auto;
-    border-radius: 8px;
+    border-radius: 12px;
     background: transparent !important;
     border: none !important;
     box-shadow: none !important;
     transform: none !important;
-    max-width: calc(100vw / 6); /* Ensure nav items fit properly */
+    max-width: calc(100vw / 6 - 8px);
+    min-height: 60px;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.2s ease;
   }
   
   .nav-item:hover {
@@ -1206,10 +1216,10 @@ body {
   }
   
   .nav-item.active {
-    background: rgba(254, 202, 87, 0.2) !important;
-    border: 1px solid rgba(254, 202, 87, 0.5) !important;
+    background: rgba(254, 202, 87, 0.25) !important;
+    border: 2px solid rgba(254, 202, 87, 0.6) !important;
     transform: none !important;
-    box-shadow: 0 2px 10px rgba(254, 202, 87, 0.3) !important;
+    box-shadow: 0 0 15px rgba(254, 202, 87, 0.4) !important;
     animation: none !important;
   }
   
@@ -1217,32 +1227,54 @@ body {
     display: none;
   }
   
+  /* Mobile Navigation Icon */
   .nav-icon {
-    width: 20px;
-    height: 20px;
+    width: 24px;
+    height: 24px;
     margin-right: 0;
-    margin-bottom: 4px;
+    margin-bottom: 6px;
     transform: none !important;
     animation: none !important;
     border: none !important;
     box-shadow: none !important;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   
   .nav-item.active .nav-icon {
     transform: none !important;
     animation: none !important;
-    border: none !important;
-    box-shadow: none !important;
+    border: 2px solid rgba(254, 202, 87, 0.8) !important;
+    box-shadow: 0 0 10px rgba(254, 202, 87, 0.5) !important;
+    background: rgba(254, 202, 87, 0.2) !important;
+  }
+  
+  /* Mobile Navigation Text */
+  .nav-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
   }
   
   .nav-info h3 {
-    font-size: 10px;
+    font-size: 11px;
     margin: 0;
-    font-weight: 500;
+    font-weight: 600;
     line-height: 1.2;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    color: rgba(255, 255, 255, 0.8);
+    width: 100%;
+    text-align: center;
+  }
+  
+  .nav-item.active .nav-info h3 {
+    color: rgba(255, 255, 255, 1);
+    text-shadow: 0 0 8px rgba(254, 202, 87, 0.6);
   }
   
   .nav-info p {
@@ -1255,9 +1287,9 @@ body {
     width: 100vw;
     top: 0;
     right: auto;
-    height: calc(100vh - 70px); /* Account for bottom nav */
+    height: calc(100vh - 80px); /* Account for bottom nav */
     margin-top: 0;
-    padding-bottom: 70px; /* Space for bottom nav */
+    padding-bottom: 80px; /* Space for bottom nav */
     overflow-x: hidden;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
@@ -1267,7 +1299,7 @@ body {
   /* Mobile Content Sections */
   .content-section {
     padding: 25px 15px;
-    min-height: calc(100vh - 140px);
+    min-height: calc(100vh - 160px);
     width: 100%;
     overflow-x: hidden;
     box-sizing: border-box;
@@ -1315,12 +1347,16 @@ body {
   }
   
   /* Mobile Profile Section */
+  .profile-wrapper {
+    margin: 25px 0;
+  }
+  
   .profile-section {
     flex-direction: column;
     text-align: center;
     gap: 20px;
     padding: 25px 20px;
-    margin: 25px 0;
+    margin-bottom: 15px;
     background: rgba(255, 255, 255, 0.08);
     border-radius: 15px;
     border: 1px solid rgba(255, 255, 255, 0.15);
@@ -1352,8 +1388,8 @@ body {
   
   .profile-actions {
     position: static;
-    order: 3;
-    margin-top: 15px;
+    order: 1;
+    margin-top: 0;
     width: 100%;
     display: flex;
     justify-content: center;
@@ -1375,7 +1411,7 @@ body {
 @media (max-width: 480px) {
   /* Extra small mobile adjustments */
   body {
-    padding-bottom: 70px;
+    padding-bottom: 80px;
   }
   
   .logo {
@@ -1391,39 +1427,43 @@ body {
     letter-spacing: 3px;
   }
   
+  /* Small Mobile Navigation */
   .main-nav {
-    height: 70px;
-    padding: 8px 2px;
+    height: 80px;
+    padding: 10px 4px;
   }
   
   .nav-item {
-    padding: 6px 2px;
-    font-size: 9px;
-    max-width: calc(100vw / 6 - 4px);
+    padding: 6px 3px;
+    font-size: 10px;
+    max-width: calc(100vw / 6 - 6px);
+    min-height: 60px;
+    border-radius: 10px;
   }
   
   .nav-icon {
-    width: 18px;
-    height: 18px;
-    margin-bottom: 3px;
+    width: 22px;
+    height: 22px;
+    margin-bottom: 4px;
   }
   
   .nav-info h3 {
-    font-size: 9px;
+    font-size: 10px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    font-weight: 600;
   }
   
   /* Mobile Main Content */
   .main-content {
-    height: calc(100vh - 70px);
-    padding-bottom: 70px;
+    height: calc(100vh - 80px);
+    padding-bottom: 80px;
   }
   
   .content-section {
     padding: 20px 12px;
-    min-height: calc(100vh - 140px);
+    min-height: calc(100vh - 160px);
   }
   
   .section-content {
@@ -1472,18 +1512,100 @@ body {
     font-size: 11px;
   }
   
-  /* Mobile Projects Section */
+  /* Mobile Projects Section - Swipe Carousel */
   .projects-grid {
-    grid-template-columns: 1fr;
-    gap: 15px;
+    display: flex;
+    overflow-x: auto;
+    gap: 20px;
+    padding: 20px 15px;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  
+  .projects-grid::-webkit-scrollbar {
+    display: none;
   }
   
   .project-item {
-    padding: 15px 12px;
+    flex: 0 0 280px;
+    padding: 20px 15px;
+    scroll-snap-align: center;
+    position: relative;
   }
   
   .project-image {
     height: 160px;
+  }
+  
+  /* Mobile Education Section - Swipe Carousel */
+  .education-grid,
+  .education-timeline {
+    display: flex;
+    overflow-x: auto;
+    gap: 20px;
+    padding: 20px 15px;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  
+  .education-grid::-webkit-scrollbar,
+  .education-timeline::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .education-item {
+    flex: 0 0 280px;
+    scroll-snap-align: center;
+    margin-bottom: 0;
+  }
+  
+  /* Mobile Certificates Section - Swipe Carousel */
+  .certificates-grid {
+    display: flex;
+    overflow-x: auto;
+    gap: 20px;
+    padding: 20px 15px;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  
+  .certificates-grid::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .cert-item {
+    flex: 0 0 280px;
+    scroll-snap-align: center;
+  }
+  
+  /* Swipe Indicators */
+  .swipe-indicators {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 20px;
+    padding: 0 15px;
+  }
+  
+  .swipe-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transition: all 0.3s ease;
+    cursor: pointer;
+  }
+  
+  .swipe-dot.active {
+    background: #feca57;
+    box-shadow: 0 0 10px rgba(254, 202, 87, 0.5);
+    transform: scale(1.2);
   }
   
   /* Mobile Contact Section */
@@ -1525,9 +1647,13 @@ body {
   }
   
   /* Extra Small Mobile Profile Section */
+  .profile-wrapper {
+    margin: 20px 0;
+  }
+  
   .profile-section {
     padding: 20px 15px;
-    margin: 20px 0;
+    margin-bottom: 12px;
     gap: 15px;
   }
   
@@ -1548,7 +1674,7 @@ body {
   }
   
   .profile-actions {
-    margin-top: 15px;
+    margin-top: 0;
   }
   
   .resume-link {
@@ -1688,6 +1814,11 @@ body {
 
 /* Enhanced Hover Effects for All Elements */
 
+/* Profile Wrapper - Container for profile section and resume button */
+.profile-wrapper {
+  margin: 30px 0;
+}
+
 /* Profile Section Hover */
 .profile-section {
   display: flex;
@@ -1697,7 +1828,7 @@ body {
   background: rgba(255, 255, 255, 0.05);
   border-radius: 15px;
   border: 1px solid rgba(255, 255, 255, 0.1);
-  margin: 30px 0;
+  margin-bottom: 20px;
   transition: all 0.4s cubic-bezier(0.4, 0.0, 0.2, 1);
   cursor: pointer;
 }
@@ -1726,7 +1857,6 @@ body {
 
 .profile-info {
   flex: 1;
-  position: relative;
 }
 
 .profile-info h2 {
@@ -1748,9 +1878,10 @@ body {
 
 /* Profile Actions */
 .profile-actions {
-  position: absolute;
-  top: 0;
-  right: 0;
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  width: 100%;
 }
 
 .resume-link {
@@ -2017,6 +2148,11 @@ body {
   background: rgba(255, 255, 255, 0.2);
   transform: translateY(-5px) scale(1.05);
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+/* Swipe Indicators - Hidden by default (desktop) */
+.swipe-indicators {
+  display: none;
 }
 
 /* Projects */
@@ -2982,11 +3118,27 @@ body {
   
   /* Better mobile navigation spacing */
   .nav-item {
-    min-height: 50px;
+    min-height: 60px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    touch-action: manipulation;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+  
+  /* Enhanced touch feedback for navigation */
+  .nav-item:active {
+    background: rgba(254, 202, 87, 0.3) !important;
+    transform: scale(0.95) !important;
+    transition: all 0.1s ease !important;
+  }
+  
+  .nav-item.active:active {
+    background: rgba(254, 202, 87, 0.4) !important;
+    transform: scale(0.95) !important;
   }
   
   /* Improved scrollbar for mobile */
@@ -3248,10 +3400,88 @@ body {
     transform: translateY(-2px) scale(1.005);
   }
 
+  /* Mobile Projects Section - Small Mobile Swipe Carousel */
   .projects-grid {
-    grid-template-columns: 1fr;
-    gap: 20px;
-    margin-top: 20px;
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: 15px;
+    padding: 15px 10px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  
+  .projects-grid::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .project-item {
+    flex: 0 0 260px;
+    scroll-snap-align: start;
+    padding: 15px 12px;
+  }
+  
+  .project-image {
+    height: 140px;
+  }
+  
+  /* Mobile Education Section - Small Mobile Swipe Carousel */
+  .education-grid,
+  .education-timeline {
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: 15px;
+    padding: 15px 10px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  
+  .education-grid::-webkit-scrollbar,
+  .education-timeline::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .education-item {
+    flex: 0 0 260px;
+    scroll-snap-align: start;
+  }
+  
+  /* Mobile Certificates Section - Small Mobile Swipe Carousel */
+  .certificates-grid {
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: 15px;
+    padding: 15px 10px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  
+  .certificates-grid::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .cert-item {
+    flex: 0 0 260px;
+    scroll-snap-align: start;
+  }
+  
+  /* Smaller indicators for small mobile */
+  .swipe-dot {
+    width: 6px;
+    height: 6px;
+  }
+  
+  .swipe-indicators {
+    gap: 6px;
+    margin-top: 15px;
   }
 
 /* Tablet Responsiveness */

@@ -1363,3 +1363,90 @@ function createInteractiveStars() {
     settings: mobileSettings
   };
 }
+
+// Mobile Swipe Carousel Functionality
+function initializeSwipeCarousels() {
+  if (!isMobile) return; // Only run on mobile
+  
+  const carousels = [
+    { container: '.projects-grid', itemSelector: '.project-item' },
+    { container: '.education-grid', itemSelector: '.education-item' },
+    { container: '.education-timeline', itemSelector: '.education-item' },
+    { container: '.certificates-grid', itemSelector: '.cert-item' }
+  ];
+  
+  carousels.forEach(carousel => {
+    const container = document.querySelector(carousel.container);
+    if (!container) return;
+    
+    const items = container.querySelectorAll(carousel.itemSelector);
+    if (items.length <= 1) return; // No need for indicators if only one item
+    
+    // Create indicators container
+    const indicatorsContainer = document.createElement('div');
+    indicatorsContainer.className = 'swipe-indicators';
+    
+    // Create dots
+    for (let i = 0; i < items.length; i++) {
+      const dot = document.createElement('div');
+      dot.className = 'swipe-dot';
+      if (i === 0) dot.classList.add('active');
+      indicatorsContainer.appendChild(dot);
+    }
+    
+    // Insert indicators after the container
+    container.parentNode.insertBefore(indicatorsContainer, container.nextSibling);
+    
+    // Update active dot based on scroll position
+    function updateActiveDot() {
+      const scrollLeft = container.scrollLeft;
+      const itemWidth = items[0].offsetWidth;
+      const gap = parseInt(getComputedStyle(container).gap) || 15;
+      const totalItemWidth = itemWidth + gap;
+      
+      // Calculate which item is most visible
+      const activeIndex = Math.round(scrollLeft / totalItemWidth);
+      const clampedIndex = Math.max(0, Math.min(activeIndex, items.length - 1));
+      
+      // Update dots
+      const dots = indicatorsContainer.querySelectorAll('.swipe-dot');
+      dots.forEach((dot, index) => {
+        dot.classList.toggle('active', index === clampedIndex);
+      });
+    }
+    
+    // Listen for scroll events with throttling
+    let scrollTimeout;
+    container.addEventListener('scroll', () => {
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(updateActiveDot, 50);
+    });
+    
+    // Optional: Click dots to scroll to item
+    const dots = indicatorsContainer.querySelectorAll('.swipe-dot');
+    dots.forEach((dot, index) => {
+      dot.addEventListener('click', () => {
+        const itemWidth = items[0].offsetWidth;
+        const gap = parseInt(getComputedStyle(container).gap) || 15;
+        const scrollPosition = index * (itemWidth + gap);
+        
+        container.scrollTo({
+          left: scrollPosition,
+          behavior: 'smooth'
+        });
+      });
+    });
+  });
+}
+
+// Initialize swipe carousels when DOM is loaded
+document.addEventListener('DOMContentLoaded', initializeSwipeCarousels);
+
+// Re-initialize on window resize (orientation change)
+window.addEventListener('resize', () => {
+  setTimeout(() => {
+    if (window.innerWidth <= 768) {
+      initializeSwipeCarousels();
+    }
+  }, 100);
+});
