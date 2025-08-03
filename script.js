@@ -46,9 +46,11 @@ const isSmallMobile = window.innerWidth <= 480;
 
 // Mobile-specific settings
 const mobileSettings = {
-  starCount: isMobile ? (isSmallMobile ? 400 : 800) : 1600, // Doubled star count for more density
-  enableStarInteraction: !isMobile, // Disable star interaction on mobile
-  reducedAnimations: isMobile // Reduce animations on mobile
+  starCount: isMobile ? (isSmallMobile ? 200 : 400) : 1600, // Reduced star count for better performance
+  enableStarInteraction: false, // Disable star interaction on all mobile devices
+  reducedAnimations: isMobile, // Reduce animations on mobile
+  enableSolarSystemInteraction: !isMobile, // Disable solar system interaction on mobile
+  scrollSensitivity: isMobile ? 0.5 : 1.0 // Reduced scroll sensitivity on mobile
 };
 
 console.log('📱 Mobile detection:', { isMobile, isSmallMobile, settings: mobileSettings });
@@ -263,6 +265,8 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Enhanced scroll listener with immediate response
     let isScrolling = false;
+    let scrollTimeout;
+    
     mainContent.addEventListener('scroll', () => {
       if (!isScrolling) {
         // Immediate response for smooth navigation
@@ -272,7 +276,41 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         isScrolling = true;
       }
+      
+      // Clear existing timeout
+      clearTimeout(scrollTimeout);
+      
+      // Set a timeout to handle scroll end
+      scrollTimeout = setTimeout(() => {
+        handleScrollNavigation();
+      }, 150);
     });
+    
+    // Add touch scroll support for mobile
+    if (isMobile) {
+      let startY = 0;
+      let isScrollingTouch = false;
+      
+      mainContent.addEventListener('touchstart', (e) => {
+        startY = e.touches[0].clientY;
+        isScrollingTouch = false;
+      }, { passive: true });
+      
+      mainContent.addEventListener('touchmove', (e) => {
+        if (!isScrollingTouch) {
+          isScrollingTouch = true;
+          requestAnimationFrame(() => {
+            handleScrollNavigation();
+          });
+        }
+      }, { passive: true });
+      
+      mainContent.addEventListener('touchend', () => {
+        setTimeout(() => {
+          handleScrollNavigation();
+        }, 100);
+      }, { passive: true });
+    }
     
     // Initial setup - set about section as active
     setTimeout(() => {
@@ -290,29 +328,47 @@ document.addEventListener('DOMContentLoaded', () => {
       console.log('✅ Navigation system initialized - About section active by default');
     }, 100);
     
-    // Enhanced navigation click feedback
+    // Enhanced navigation click feedback - optimized for mobile
     const navItems = document.querySelectorAll('.nav-item');
     navItems.forEach(navItem => {
-      navItem.addEventListener('mouseenter', () => {
-        if (!navItem.classList.contains('active')) {
-          navItem.style.transform = 'translateX(3px) scale(1.02)';
-        }
-      });
+      // Only add hover effects on non-mobile devices
+      if (!isMobile) {
+        navItem.addEventListener('mouseenter', () => {
+          if (!navItem.classList.contains('active')) {
+            navItem.style.transform = 'translateX(3px) scale(1.02)';
+          }
+        });
+        
+        navItem.addEventListener('mouseleave', () => {
+          if (!navItem.classList.contains('active')) {
+            navItem.style.transform = '';
+          }
+        });
+      }
       
-      navItem.addEventListener('mouseleave', () => {
-        if (!navItem.classList.contains('active')) {
-          navItem.style.transform = '';
-        }
-      });
-      
-      navItem.addEventListener('click', () => {
+      // Touch/click feedback for all devices
+      navItem.addEventListener('click', (e) => {
+        e.preventDefault();
+        
         // Add click feedback with persistence
-        navItem.style.transform = 'translateX(8px) scale(1.08)';
+        if (!isMobile) {
+          navItem.style.transform = 'translateX(8px) scale(1.08)';
+        }
+        
+        // Mobile-specific feedback
+        if (isMobile) {
+          navItem.style.backgroundColor = 'rgba(254, 202, 87, 0.3)';
+          setTimeout(() => {
+            navItem.style.backgroundColor = '';
+          }, 200);
+        }
         
         // Ensure the active class persists
         setTimeout(() => {
           if (navItem.classList.contains('active')) {
-            navItem.style.transform = 'translateX(8px) scale(1.08)';
+            if (!isMobile) {
+              navItem.style.transform = 'translateX(8px) scale(1.08)';
+            }
           } else {
             navItem.style.transform = '';
           }
@@ -332,6 +388,19 @@ document.addEventListener('DOMContentLoaded', () => {
           }
         }, 800); // Check after scroll animation completes
       });
+      
+      // Add touch feedback for mobile
+      if (isMobile) {
+        navItem.addEventListener('touchstart', () => {
+          navItem.style.backgroundColor = 'rgba(255, 255, 255, 0.1)';
+        }, { passive: true });
+        
+        navItem.addEventListener('touchend', () => {
+          setTimeout(() => {
+            navItem.style.backgroundColor = '';
+          }, 150);
+        }, { passive: true });
+      }
     });
     
     // Add scroll position indicator (optional debug)
@@ -752,21 +821,28 @@ class SolarSystemController {
   }
   
   setupMouseTracking() {
-    // Track mouse movement
-    document.addEventListener('mousemove', (e) => {
-      this.mouseX = e.clientX;
-      this.mouseY = e.clientY;
-    });
-    
-    // Pause repulsion when mouse leaves window
-    document.addEventListener('mouseleave', () => {
+    // Only setup mouse tracking on desktop for better mobile performance
+    if (mobileSettings.enableSolarSystemInteraction) {
+      // Track mouse movement
+      document.addEventListener('mousemove', (e) => {
+        this.mouseX = e.clientX;
+        this.mouseY = e.clientY;
+      });
+      
+      // Pause repulsion when mouse leaves window
+      document.addEventListener('mouseleave', () => {
+        this.isActive = false;
+        this.resetAllElements();
+      });
+      
+      document.addEventListener('mouseenter', () => {
+        this.isActive = true;
+      });
+    } else {
+      // Disable solar system interaction on mobile
+      console.log('📱 Solar system interaction disabled on mobile for better performance');
       this.isActive = false;
-      this.resetAllElements();
-    });
-    
-    document.addEventListener('mouseenter', () => {
-      this.isActive = true;
-    });
+    }
   }
   
   calculateRepulsion(elementData) {
@@ -1127,51 +1203,68 @@ function createInteractiveStars() {
   let mouseX = window.innerWidth / 2;
   let mouseY = window.innerHeight / 2;
   
-  // Create mobile-optimized star count for better performance
-  for (let i = 0; i < mobileSettings.starCount; i++) {
+  // Mobile-optimized star count for better performance
+  const starCount = mobileSettings.starCount;
+  console.log(`📱 Creating ${starCount} stars for mobile optimization`);
+  
+  for (let i = 0; i < starCount; i++) {
     const star = document.createElement('div');
     star.className = 'test-star';
     
-    // Random position across full screen with some clustering for realism
+    // Random position across full screen
     const x = Math.random() * window.innerWidth;
     const y = Math.random() * window.innerHeight;
     
-    // Deep space star distribution - realistic density with more variety
+    // Mobile-optimized star distribution for better performance
     let starSize, opacity;
     const sizeRandom = Math.random();
     
-    if (sizeRandom < 0.75) {
-      // 75% cosmic dust particles (0.1-0.8px) - barely visible background
-      starSize = Math.random() * 0.7 + 0.1;
-      opacity = Math.random() * 0.15 + 0.05; // Almost invisible
-    } else if (sizeRandom < 0.90) {
-      // 15% distant micro stars (0.6-1.5px)
-      starSize = Math.random() * 0.9 + 0.6;
-      opacity = Math.random() * 0.3 + 0.2; // Very faint
-    } else if (sizeRandom < 0.975) {
-      // 7.5% visible stars (1.0-2.5px)
-      starSize = Math.random() * 1.5 + 1.0;
-      opacity = Math.random() * 0.4 + 0.4; // Noticeable
-    } else if (sizeRandom < 0.995) {
-      // 2% bright stars (2.0-3.5px)
-      starSize = Math.random() * 1.5 + 2.0;
-      opacity = Math.random() * 0.3 + 0.6; // Bright focal points
+    if (isMobile) {
+      // Simplified star sizes for mobile performance
+      if (sizeRandom < 0.8) {
+        // 80% small stars
+        starSize = Math.random() * 1.0 + 0.5;
+        opacity = Math.random() * 0.3 + 0.2;
+      } else if (sizeRandom < 0.95) {
+        // 15% medium stars
+        starSize = Math.random() * 1.5 + 1.0;
+        opacity = Math.random() * 0.4 + 0.4;
+      } else {
+        // 5% bright stars
+        starSize = Math.random() * 2.0 + 1.5;
+        opacity = Math.random() * 0.3 + 0.6;
+      }
     } else {
-      // 0.5% brilliant stellar objects (3.0-5.0px)
-      starSize = Math.random() * 2.0 + 3.0;
-      opacity = Math.random() * 0.2 + 0.75; // Very bright
+      // Desktop star distribution
+      if (sizeRandom < 0.75) {
+        starSize = Math.random() * 0.7 + 0.1;
+        opacity = Math.random() * 0.15 + 0.05;
+      } else if (sizeRandom < 0.90) {
+        starSize = Math.random() * 0.9 + 0.6;
+        opacity = Math.random() * 0.3 + 0.2;
+      } else if (sizeRandom < 0.975) {
+        starSize = Math.random() * 1.5 + 1.0;
+        opacity = Math.random() * 0.4 + 0.4;
+      } else if (sizeRandom < 0.995) {
+        starSize = Math.random() * 1.5 + 2.0;
+        opacity = Math.random() * 0.3 + 0.6;
+      } else {
+        starSize = Math.random() * 2.0 + 3.0;
+        opacity = Math.random() * 0.2 + 0.75;
+      }
     }
     
-    // Add subtle color variation for realism
-    const colorVariation = Math.random();
-    let starColor = '#fff';
-    if (colorVariation < 0.05) {
-      starColor = '#ffffcc'; // Slightly yellowish (5%)
-    } else if (colorVariation < 0.08) {
-      starColor = '#ccddff'; // Slightly bluish (3%)
-    }
+    // Simplified color for mobile
+    const starColor = isMobile ? '#fff' : (Math.random() < 0.05 ? '#ffffcc' : (Math.random() < 0.08 ? '#ccddff' : '#fff'));
     
-    // Style the star with variable size, opacity, and enhanced glow
+    // Mobile-optimized styling with reduced effects
+    const glowIntensity = isMobile ? starSize * 1.5 : starSize * 2;
+    const boxShadowMobile = isMobile 
+      ? `0 0 ${glowIntensity}px rgba(255,255,255,${opacity * 0.4})`
+      : `0 0 ${starSize * 2}px rgba(255,255,255,${opacity * 0.6}), 
+         0 0 ${starSize * 4}px rgba(255,255,255,${opacity * 0.2}),
+         0 0 ${starSize * 6}px rgba(255,255,255,${opacity * 0.1})`;
+    
     star.style.cssText = `
       position: absolute;
       left: ${x}px;
@@ -1180,17 +1273,15 @@ function createInteractiveStars() {
       height: ${starSize}px;
       background: ${starColor};
       border-radius: 50%;
-      box-shadow: 0 0 ${starSize * 2}px rgba(255,255,255,${opacity * 0.6}), 
-                  0 0 ${starSize * 4}px rgba(255,255,255,${opacity * 0.2}),
-                  0 0 ${starSize * 6}px rgba(255,255,255,${opacity * 0.1});
+      box-shadow: ${boxShadowMobile};
       z-index: 10;
       pointer-events: none;
       opacity: ${opacity};
+      ${isMobile ? 'will-change: transform;' : ''}
     `;
     
     starsContainer.appendChild(star);
     
-    // Store star data with size information
     stars.push({
       element: star,
       originalX: x,
@@ -1211,9 +1302,9 @@ function createInteractiveStars() {
       mouseY = e.clientY;
     });
     
-    // Add touch support for tablets
+    // Add touch support for tablets (but disabled on mobile for performance)
     document.addEventListener('touchmove', (e) => {
-      if (e.touches.length > 0) {
+      if (e.touches.length > 0 && !isMobile) {
         mouseX = e.touches[0].clientX;
         mouseY = e.touches[0].clientY;
       }
@@ -1222,45 +1313,45 @@ function createInteractiveStars() {
   
   // Mobile-optimized animation loop
   function animate() {
+    // Skip animation on mobile for better performance
+    if (!mobileSettings.enableStarInteraction || isMobile) {
+      return; // Static stars on mobile
+    }
+    
     stars.forEach(starData => {
-      // Skip repulsion calculations on mobile for better performance
-      if (!mobileSettings.enableStarInteraction) {
-        return; // Stars remain static on mobile
-      }
-      
       const deltaX = mouseX - starData.originalX;
       const deltaY = mouseY - starData.originalY;
       const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
       
-      if (distance < 150) { // Repel within 150px
+      if (distance < 150) {
         const force = (150 - distance) / 150;
-        const repelX = -(deltaX / distance) * force * 60; // Strong repulsion
+        const repelX = -(deltaX / distance) * force * 60;
         const repelY = -(deltaY / distance) * force * 60;
         
-        starData.currentX += (repelX - starData.currentX) * 0.3; // Fast response
+        starData.currentX += (repelX - starData.currentX) * 0.3;
         starData.currentY += (repelY - starData.currentY) * 0.3;
         
-        // Visual feedback when repelled
         starData.element.style.boxShadow = '0 0 20px rgba(255,255,255,1), 0 0 30px rgba(255,255,255,0.8)';
       } else {
-        // Return to original position
         starData.currentX *= 0.85;
         starData.currentY *= 0.85;
         
-        // Normal glow
         starData.element.style.boxShadow = '0 0 12px rgba(255,255,255,1), 0 0 20px rgba(255,255,255,0.5)';
       }
       
-      // Apply transform
       starData.element.style.transform = `translate(${starData.currentX}px, ${starData.currentY}px)`;
     });
     
     requestAnimationFrame(animate);
   }
   
-  // Start animation
-  animate();
-  console.log('🎬 Animation started');
+  // Start animation only on desktop
+  if (!isMobile) {
+    animate();
+    console.log('🎬 Desktop animation started');
+  } else {
+    console.log('📱 Mobile: Static stars for better performance');
+  }
   
   // Global controls for testing
   window.testStars = {
@@ -1268,12 +1359,7 @@ function createInteractiveStars() {
     mouseX: () => mouseX,
     mouseY: () => mouseY,
     starCount: () => stars.length,
-    forceRepel: () => {
-      stars.forEach(star => {
-        star.currentX = (Math.random() - 0.5) * 100;
-        star.currentY = (Math.random() - 0.5) * 100;
-      });
-      console.log('🔥 Forced star repulsion for testing');
-    }
+    isMobile: isMobile,
+    settings: mobileSettings
   };
 }
