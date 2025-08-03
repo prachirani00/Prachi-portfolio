@@ -254,9 +254,18 @@ function handleMessageButtonVisibility() {
   if (!messageButton || !mainContent) return;
   
   const scrollTop = mainContent.scrollTop;
-  const scrollThreshold = 400; // Show after scrolling 400px
+  const scrollThreshold = 300; // Show after scrolling 300px
+  const contactSection = document.querySelector('.contact-section');
   
-  if (scrollTop > scrollThreshold) {
+  // Hide button when in contact section to avoid overlap
+  let inContactSection = false;
+  if (contactSection) {
+    const contactTop = contactSection.offsetTop - 200;
+    const contactBottom = contactSection.offsetTop + contactSection.offsetHeight;
+    inContactSection = scrollTop >= contactTop && scrollTop <= contactBottom;
+  }
+  
+  if (scrollTop > scrollThreshold && !inContactSection) {
     messageButton.classList.add('show');
   } else {
     messageButton.classList.remove('show');
@@ -269,7 +278,18 @@ function initializeMessageButton() {
   if (messageButton) {
     // Ensure it starts hidden
     messageButton.classList.remove('show');
-    console.log('📧 Message Button initialized and hidden initially');
+    
+    // Add periodic pulse when visible to draw attention
+    setInterval(() => {
+      if (messageButton.classList.contains('show')) {
+        messageButton.classList.add('pulse');
+        setTimeout(() => {
+          messageButton.classList.remove('pulse');
+        }, 2000);
+      }
+    }, 5000); // Pulse every 5 seconds
+    
+    console.log('📧 Message Button initialized with pulse animation');
   }
 }
 
@@ -279,22 +299,41 @@ function scrollToContactForm() {
   const mainContent = document.querySelector('.main-content');
   
   if (contactForm && mainContent) {
-    const formPosition = contactForm.offsetTop - 100; // Add some offset for better view
+    const formPosition = contactForm.offsetTop - 80; // Add some offset for better view
+    
+    // Add haptic feedback on mobile
+    if (isMobile && navigator.vibrate) {
+      navigator.vibrate(50);
+    }
     
     mainContent.scrollTo({
       top: formPosition,
       behavior: 'smooth'
     });
     
-    // Optional: Focus on the first input field after scrolling
+    // Add visual feedback to the button
+    const messageButton = document.getElementById('messageButtonBottom');
+    if (messageButton) {
+      messageButton.style.transform = 'translateY(-3px) scale(0.95)';
+      setTimeout(() => {
+        messageButton.style.transform = '';
+      }, 200);
+    }
+    
+    // Focus on the first input field after scrolling
     setTimeout(() => {
       const nameInput = document.getElementById('name');
       if (nameInput) {
         nameInput.focus();
+        // Add a subtle highlight effect
+        nameInput.style.boxShadow = '0 0 0 2px rgba(254, 202, 87, 0.5)';
+        setTimeout(() => {
+          nameInput.style.boxShadow = '';
+        }, 2000);
       }
     }, 800);
     
-    console.log('📧 Scrolled to contact form');
+    console.log('📧 Scrolled to contact form with enhanced feedback');
   }
 }
 
