@@ -2,7 +2,10 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+  <meta name="theme-color" content="#0c0c0c">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <link rel="icon" type="image/png" href="assets/profile.jpg">
   <link rel="shortcut icon" type="image/png" href="assets/profile.jpg">
   <link rel="apple-touch-icon" href="assets/profile.jpg">
@@ -44,56 +47,200 @@
     <span>Portfolio</span>
   </h1>
 
-  <!-- Navigation Menu -->
-  <nav class="main-nav">
-    <button class="nav-item about-nav" onclick="scrollToSection('about')">
-      <div class="nav-icon about-icon"></div>
+  <!-- Navigation Menu with Integrated Planets -->
+  <nav class="main-nav tech-nav">
+    <div class="nav-grid-lines"></div>
+    <div class="nav-scanner"></div>
+    
+    <button class="nav-item about-nav" onclick="scrollToSection('about')" data-planet="mercury">
+      <div class="nav-planet-container">
+        <div class="nav-planet mercury-nav-planet">
+          <div class="planet-surface"></div>
+          <div class="planet-glow"></div>
+        </div>
+        <div class="nav-orbit"></div>
+        <div class="nav-tech-lines"></div>
+      </div>
       <div class="nav-info">
         <h3>About</h3>
         <p>Who I Am</p>
+        <div class="nav-data-stream"></div>
       </div>
+      <div class="nav-hologram"></div>
     </button>
     
-    <button class="nav-item skills-nav" onclick="scrollToSection('skills')">
-      <div class="nav-icon skills-icon"></div>
+    <button class="nav-item skills-nav" onclick="scrollToSection('skills')" data-planet="venus">
+      <div class="nav-planet-container">
+        <div class="nav-planet venus-nav-planet">
+          <div class="planet-surface"></div>
+          <div class="planet-atmosphere"></div>
+          <div class="planet-glow"></div>
+        </div>
+        <div class="nav-orbit"></div>
+        <div class="nav-tech-lines"></div>
+      </div>
       <div class="nav-info">
         <h3>Skills</h3>
         <p>What I Do</p>
+        <div class="nav-data-stream"></div>
       </div>
+      <div class="nav-hologram"></div>
     </button>
     
-    <button class="nav-item projects-nav" onclick="scrollToSection('projects')">
-      <div class="nav-icon projects-icon"></div>
+    <button class="nav-item projects-nav" onclick="scrollToSection('projects')" data-planet="earth">
+      <div class="nav-planet-container">
+        <div class="nav-planet earth-nav-planet">
+          <div class="planet-surface"></div>
+          <div class="planet-continents"></div>
+          <div class="planet-clouds"></div>
+          <div class="planet-glow"></div>
+        </div>
+        <div class="nav-orbit"></div>
+        <div class="nav-tech-lines"></div>
+      </div>
       <div class="nav-info">
         <h3>Projects</h3>
         <p>What I've Built</p>
+        <div class="nav-data-stream"></div>
       </div>
+      <div class="nav-hologram"></div>
     </button>
     
-    <button class="nav-item education-nav" onclick="scrollToSection('education')">
-      <div class="nav-icon education-icon"></div>
+    <button class="nav-item education-nav" onclick="scrollToSection('education')" data-planet="mars">
+      <div class="nav-planet-container">
+        <div class="nav-planet mars-nav-planet">
+          <div class="planet-surface"></div>
+          <div class="planet-terrain"></div>
+          <div class="planet-glow"></div>
+        </div>
+        <div class="nav-orbit"></div>
+        <div class="nav-tech-lines"></div>
+      </div>
       <div class="nav-info">
         <h3>Education</h3>
         <p>Academic Journey</p>
+        <div class="nav-data-stream"></div>
       </div>
+      <div class="nav-hologram"></div>
     </button>
     
-    <button class="nav-item certificates-nav" onclick="scrollToSection('certificates')">
-      <div class="nav-icon certificates-icon"></div>
+    <button class="nav-item certificates-nav" onclick="scrollToSection('certificates')" data-planet="jupiter">
+      <div class="nav-planet-container">
+        <div class="nav-planet jupiter-nav-planet">
+          <div class="planet-surface"></div>
+          <div class="planet-bands"></div>
+          <div class="planet-spot"></div>
+          <div class="planet-glow"></div>
+        </div>
+        <div class="nav-orbit"></div>
+        <div class="nav-tech-lines"></div>
+      </div>
       <div class="nav-info">
         <h3>Certificates</h3>
         <p>Achievements</p>
+        <div class="nav-data-stream"></div>
       </div>
+      <div class="nav-hologram"></div>
     </button>
     
-    <button class="nav-item contact-nav" onclick="scrollToSection('contact')">
-      <div class="nav-icon contact-icon"></div>
+    <button class="nav-item contact-nav" onclick="scrollToSection('contact')" data-planet="saturn">
+      <div class="nav-planet-container">
+        <div class="nav-planet saturn-nav-planet">
+          <div class="planet-surface"></div>
+          <div class="planet-rings"></div>
+          <div class="planet-glow"></div>
+        </div>
+        <div class="nav-orbit"></div>
+        <div class="nav-tech-lines"></div>
+      </div>
       <div class="nav-info">
         <h3>Contact</h3>
         <p>Get In Touch</p>
+        <div class="nav-data-stream"></div>
       </div>
+      <div class="nav-hologram"></div>
     </button>
+    
+    <!-- Central Sun Element -->
+    <div class="nav-central-sun">
+      <div class="central-sun-body">
+        <div class="sun-core"></div>
+        <div class="sun-flares"></div>
+      </div>
+      <div class="central-tech-ring"></div>
+    </div>
   </nav>
+
+  <!-- Interactive Solar System Elements -->
+  <div class="interactive-solar-system" id="interactiveSolarSystem">
+    <!-- Sun -->
+    <div class="solar-element sun-element" data-repel-strength="100">
+      <div class="solar-body sun-body">
+        <div class="sun-corona"></div>
+        <div class="sun-flare"></div>
+      </div>
+      <div class="element-tooltip">Sun ☀️</div>
+    </div>
+    
+    <!-- Mercury -->
+    <div class="solar-element mercury-element" data-repel-strength="60">
+      <div class="solar-body mercury-body"></div>
+      <div class="element-tooltip">Mercury</div>
+    </div>
+    
+    <!-- Venus -->
+    <div class="solar-element venus-element" data-repel-strength="70">
+      <div class="solar-body venus-body">
+        <div class="venus-atmosphere"></div>
+      </div>
+      <div class="element-tooltip">Venus ♀</div>
+    </div>
+    
+    <!-- Earth -->
+    <div class="solar-element earth-element" data-repel-strength="80">
+      <div class="solar-body earth-body">
+        <div class="earth-continents"></div>
+        <div class="earth-clouds"></div>
+      </div>
+      <div class="element-tooltip">Earth 🌍</div>
+    </div>
+    
+    <!-- Mars -->
+    <div class="solar-element mars-element" data-repel-strength="65">
+      <div class="solar-body mars-body">
+        <div class="mars-surface"></div>
+      </div>
+      <div class="element-tooltip">Mars ♂</div>
+    </div>
+    
+    <!-- Jupiter -->
+    <div class="solar-element jupiter-element" data-repel-strength="120">
+      <div class="solar-body jupiter-body">
+        <div class="jupiter-bands"></div>
+        <div class="jupiter-spot"></div>
+      </div>
+      <div class="element-tooltip">Jupiter ♃</div>
+    </div>
+    
+    <!-- Saturn -->
+    <div class="solar-element saturn-element" data-repel-strength="110">
+      <div class="solar-body saturn-body">
+        <div class="saturn-rings"></div>
+      </div>
+      <div class="element-tooltip">Saturn ♄</div>
+    </div>
+    
+    <!-- Asteroid Belt -->
+    <div class="solar-element asteroid1-element" data-repel-strength="40">
+      <div class="solar-body asteroid-body"></div>
+    </div>
+    <div class="solar-element asteroid2-element" data-repel-strength="35">
+      <div class="solar-body asteroid-body"></div>
+    </div>
+    <div class="solar-element asteroid3-element" data-repel-strength="45">
+      <div class="solar-body asteroid-body"></div>
+    </div>
+  </div>
 
   <!-- Interactive Space Objects -->
   <div class="space-objects">

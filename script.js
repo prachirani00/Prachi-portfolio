@@ -4,7 +4,7 @@
 window.addEventListener('load', function() {
   const loadingScreen = document.getElementById('loading-screen');
   
-  // Minimum loading time of 1.5 seconds for faster experience
+  // Minimum loading time of 1.5 seconds for better experience
   const minLoadTime = 1500;
   const startTime = Date.now();
   
@@ -156,91 +156,85 @@ function handleScrollNavigation() {
   handleMessageButtonVisibility();
   
   let currentSection = null;
-  let maxVisibleHeight = 0;
+  let maxVisibility = 0;
   
   sections.forEach((section) => {
     const sectionTop = section.offsetTop;
     const sectionHeight = section.offsetHeight;
     const sectionBottom = sectionTop + sectionHeight;
     
-    // Calculate visible height of this section
-    const visibleTop = Math.max(scrollTop, sectionTop);
-    const visibleBottom = Math.min(scrollTop + containerHeight, sectionBottom);
-    const visibleHeight = Math.max(0, visibleBottom - visibleTop);
+    // Calculate how much of the section is visible
+    const viewportTop = scrollTop;
+    const viewportBottom = scrollTop + containerHeight;
     
-    // If this section has more visible content, make it current
-    if (visibleHeight > maxVisibleHeight && visibleHeight > 50) { // Lowered minimum to 50px
-      maxVisibleHeight = visibleHeight;
+    // Calculate intersection
+    const intersectionTop = Math.max(viewportTop, sectionTop);
+    const intersectionBottom = Math.min(viewportBottom, sectionBottom);
+    const intersectionHeight = Math.max(0, intersectionBottom - intersectionTop);
+    
+    // Calculate visibility percentage of the section
+    const visibilityPercentage = intersectionHeight / Math.min(sectionHeight, containerHeight);
+    
+    // Consider a section "current" if it's more than 30% visible OR if we're near the top of it
+    const isNearTop = (scrollTop >= sectionTop - 100) && (scrollTop < sectionTop + 200);
+    const isSignificantlyVisible = visibilityPercentage > 0.3;
+    
+    if ((isSignificantlyVisible || isNearTop) && visibilityPercentage > maxVisibility) {
+      maxVisibility = visibilityPercentage;
       currentSection = section;
     }
   });
   
+  // Update navigation highlighting
   if (currentSection) {
-    // Remove active class from all nav items
-    navItems.forEach(nav => nav.classList.remove('active'));
-    
-    // Add active class to current section's nav item
-    const sectionClasses = currentSection.className.split(' ');
-    const sectionName = sectionClasses.find(cls => cls.includes('-section'))?.replace('-section', '');
-    if (sectionName) {
-      const activeNav = document.querySelector(`.${sectionName}-nav`);
-      if (activeNav) {
-        activeNav.classList.add('active');
-        console.log(`📜 Scroll handler - Active section: ${sectionName} (${maxVisibleHeight}px visible)`);
-      }
-    }
+    const sectionId = currentSection.id;
+    updateActiveNavigation(sectionId);
   }
 }
 
-// Enhanced Intersection Observer for responsive scroll-based navigation
+// Function to update active navigation state
+function updateActiveNavigation(sectionId) {
+  const navItems = document.querySelectorAll('.nav-item');
+  
+  // Remove active class from all nav items
+  navItems.forEach(nav => nav.classList.remove('active'));
+  
+  // Add active class to the corresponding nav item
+  const activeNav = document.querySelector(`.${sectionId}-nav`);
+  if (activeNav) {
+    activeNav.classList.add('active');
+    console.log(`🎯 Navigation updated - Active section: ${sectionId}`);
+  }
+}
+
+// Improved Intersection Observer for better scroll detection
 function setupIntersectionObserver() {
   const sections = document.querySelectorAll('.content-section');
-  const navItems = document.querySelectorAll('.nav-item');
   
   const observerOptions = {
     root: document.querySelector('.main-content'),
-    rootMargin: '-50px 0px -50px 0px', // Better margins for scroll detection
-    threshold: [0.1, 0.25, 0.5, 0.75] // Multiple thresholds for smooth transitions
+    rootMargin: '-20% 0px -20% 0px', // Better detection area
+    threshold: [0, 0.1, 0.25, 0.5, 0.75, 1.0]
   };
   
   const observer = new IntersectionObserver((entries) => {
-    // Find all currently intersecting sections
-    const intersectingSections = entries.filter(entry => entry.isIntersecting);
+    let mostVisibleSection = null;
+    let maxIntersectionRatio = 0;
     
-    if (intersectingSections.length > 0) {
-      // Find the most visible section (highest intersection ratio)
-      let mostVisible = intersectingSections[0].target;
-      let maxRatio = intersectingSections[0].intersectionRatio;
-      
-      intersectingSections.forEach(entry => {
-        if (entry.intersectionRatio > maxRatio) {
-          maxRatio = entry.intersectionRatio;
-          mostVisible = entry.target;
-        }
-      });
-      
-      // Update navigation with lower threshold for better responsiveness
-      if (maxRatio > 0.1) {
-        // Remove active class from all nav items
-        navItems.forEach(nav => nav.classList.remove('active'));
-        
-        // Add active class to current section's nav item
-        const sectionClasses = mostVisible.className.split(' ');
-        const sectionName = sectionClasses.find(cls => cls.includes('-section'))?.replace('-section', '');
-        if (sectionName) {
-          const activeNav = document.querySelector(`.${sectionName}-nav`);
-          if (activeNav) {
-            activeNav.classList.add('active');
-            console.log(`🎯 Scroll detected - Active section: ${sectionName} (${Math.round(maxRatio * 100)}% visible)`);
-          }
-        }
+    entries.forEach(entry => {
+      if (entry.isIntersecting && entry.intersectionRatio > maxIntersectionRatio) {
+        maxIntersectionRatio = entry.intersectionRatio;
+        mostVisibleSection = entry.target;
       }
+    });
+    
+    if (mostVisibleSection && maxIntersectionRatio > 0.1) {
+      const sectionId = mostVisibleSection.id;
+      updateActiveNavigation(sectionId);
     }
   }, observerOptions);
   
   sections.forEach(section => observer.observe(section));
-  
-  // Return observer for potential cleanup
   return observer;
 }
 
@@ -251,44 +245,39 @@ document.addEventListener('DOMContentLoaded', () => {
   
   const mainContent = document.querySelector('.main-content');
   if (mainContent) {
-    // Use intersection observer for better performance
+    // Setup both detection systems for maximum reliability
     const observer = setupIntersectionObserver();
     
-    // More responsive scroll listener with reduced debounce
-    let scrollTimeout;
+    // Enhanced scroll listener with immediate response
+    let isScrolling = false;
     mainContent.addEventListener('scroll', () => {
-      // Immediate call for responsiveness
-      handleScrollNavigation();
-      
-      // Debounced call for performance
-      clearTimeout(scrollTimeout);
-      scrollTimeout = setTimeout(() => {
-        handleScrollNavigation();
-      }, 25); // Reduced from 50ms to 25ms for better responsiveness
+      if (!isScrolling) {
+        // Immediate response for smooth navigation
+        requestAnimationFrame(() => {
+          handleScrollNavigation();
+          isScrolling = false;
+        });
+        isScrolling = true;
+      }
     });
     
-    // Enhanced initial setup
+    // Initial setup - set about section as active
     setTimeout(() => {
       // Clear any existing active states
       document.querySelectorAll('.nav-item').forEach(item => {
         item.classList.remove('active');
       });
       
-      // Set the first section (about) as active
-      const firstNav = document.querySelector('.about-nav');
-      if (firstNav) {
-        firstNav.classList.add('active');
-        console.log('✅ Initial active section set: about');
-      }
+      // Set the first section (about) as active by default
+      updateActiveNavigation('about');
       
-      // Ensure main content scrolls to top
+      // Ensure main content starts at top
       mainContent.scrollTop = 0;
       
-      // Initial call to set proper state
-      handleScrollNavigation();
-    }, 100); // Reduced timeout for faster initialization
+      console.log('✅ Navigation system initialized - About section active by default');
+    }, 100);
     
-    // Add enhanced visual feedback for navigation interactions
+    // Enhanced navigation click feedback
     const navItems = document.querySelectorAll('.nav-item');
     navItems.forEach(navItem => {
       navItem.addEventListener('mouseenter', () => {
@@ -697,4 +686,159 @@ window.scrollToSection = function(sectionName) {
       animateStatsGrid();
     }
   }, 800); // Wait for scroll animation to complete
+};
+
+// Interactive Solar System with Mouse Repulsion
+class SolarSystemController {
+  constructor() {
+    this.elements = [];
+    this.mouseX = 0;
+    this.mouseY = 0;
+    this.isActive = true;
+    this.maxRepelDistance = 150;
+    this.repelStrength = 0.5;
+    
+    this.init();
+  }
+  
+  init() {
+    // Wait for DOM to be ready
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', () => this.setup());
+    } else {
+      this.setup();
+    }
+  }
+  
+  setup() {
+    // Get all solar system elements
+    const solarElements = document.querySelectorAll('.solar-element');
+    
+    solarElements.forEach(element => {
+      const rect = element.getBoundingClientRect();
+      const repelStrength = parseFloat(element.dataset.repelStrength) || 1;
+      
+      this.elements.push({
+        element: element,
+        originalX: rect.left + rect.width / 2,
+        originalY: rect.top + rect.height / 2,
+        currentX: 0,
+        currentY: 0,
+        repelStrength: repelStrength,
+        isRepelled: false
+      });
+    });
+    
+    // Setup mouse tracking
+    this.setupMouseTracking();
+    
+    // Start animation loop
+    this.animate();
+    
+    console.log('🌌 Solar system initialized with', this.elements.length, 'elements');
+  }
+  
+  setupMouseTracking() {
+    // Track mouse movement
+    document.addEventListener('mousemove', (e) => {
+      this.mouseX = e.clientX;
+      this.mouseY = e.clientY;
+    });
+    
+    // Pause repulsion when mouse leaves window
+    document.addEventListener('mouseleave', () => {
+      this.isActive = false;
+      this.resetAllElements();
+    });
+    
+    document.addEventListener('mouseenter', () => {
+      this.isActive = true;
+    });
+  }
+  
+  calculateRepulsion(elementData) {
+    if (!this.isActive) return { x: 0, y: 0 };
+    
+    const deltaX = this.mouseX - elementData.originalX;
+    const deltaY = this.mouseY - elementData.originalY;
+    const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+    
+    if (distance > this.maxRepelDistance) {
+      return { x: 0, y: 0 };
+    }
+    
+    // Calculate repulsion force (stronger when closer)
+    const force = (this.maxRepelDistance - distance) / this.maxRepelDistance;
+    const repelX = -(deltaX / distance) * force * this.repelStrength * elementData.repelStrength * 50;
+    const repelY = -(deltaY / distance) * force * this.repelStrength * elementData.repelStrength * 50;
+    
+    return { x: repelX, y: repelY };
+  }
+  
+  animate() {
+    this.elements.forEach(elementData => {
+      const repulsion = this.calculateRepulsion(elementData);
+      
+      // Smooth transition to new position
+      elementData.currentX += (repulsion.x - elementData.currentX) * 0.1;
+      elementData.currentY += (repulsion.y - elementData.currentY) * 0.1;
+      
+      // Apply transform
+      const transform = `translate(${elementData.currentX}px, ${elementData.currentY}px)`;
+      elementData.element.style.transform = transform;
+      
+      // Update repelled state for visual feedback
+      const isCurrentlyRepelled = Math.abs(elementData.currentX) > 5 || Math.abs(elementData.currentY) > 5;
+      if (isCurrentlyRepelled !== elementData.isRepelled) {
+        elementData.isRepelled = isCurrentlyRepelled;
+        elementData.element.style.filter = isCurrentlyRepelled ? 'brightness(1.3) saturate(1.2)' : '';
+      }
+    });
+    
+    requestAnimationFrame(() => this.animate());
+  }
+  
+  resetAllElements() {
+    this.elements.forEach(elementData => {
+      elementData.currentX = 0;
+      elementData.currentY = 0;
+      elementData.element.style.transform = 'translate(0px, 0px)';
+      elementData.element.style.filter = '';
+      elementData.isRepelled = false;
+    });
+  }
+  
+  // Public methods for interaction
+  setRepelStrength(strength) {
+    this.repelStrength = Math.max(0, Math.min(2, strength));
+  }
+  
+  setMaxDistance(distance) {
+    this.maxRepelDistance = Math.max(50, Math.min(300, distance));
+  }
+  
+  toggle() {
+    this.isActive = !this.isActive;
+    if (!this.isActive) {
+      this.resetAllElements();
+    }
+  }
+}
+
+// Initialize Solar System
+let solarSystem;
+
+document.addEventListener('DOMContentLoaded', () => {
+  // Small delay to ensure all elements are positioned
+  setTimeout(() => {
+    solarSystem = new SolarSystemController();
+  }, 100);
+});
+
+// Expose solar system controls globally (for debugging/customization)
+window.solarSystemControls = {
+  setStrength: (strength) => solarSystem?.setRepelStrength(strength),
+  setDistance: (distance) => solarSystem?.setMaxDistance(distance),
+  toggle: () => solarSystem?.toggle(),
+  reset: () => solarSystem?.resetAllElements()
 };
