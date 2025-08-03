@@ -86,6 +86,61 @@ function scrollToSection(sectionName) {
 // Make functions globally available
 window.scrollToSection = scrollToSection;
 
+// Message Button Bottom Scroll Handler
+function handleMessageButtonVisibility() {
+  const messageButton = document.getElementById('messageButtonBottom');
+  const mainContent = document.querySelector('.main-content');
+  
+  if (!messageButton || !mainContent) return;
+  
+  const scrollTop = mainContent.scrollTop;
+  const scrollThreshold = 400; // Show after scrolling 400px
+  
+  if (scrollTop > scrollThreshold) {
+    messageButton.classList.add('show');
+  } else {
+    messageButton.classList.remove('show');
+  }
+}
+
+// Initialize Message Button on page load
+function initializeMessageButton() {
+  const messageButton = document.getElementById('messageButtonBottom');
+  if (messageButton) {
+    // Ensure it starts hidden
+    messageButton.classList.remove('show');
+    console.log('📧 Message Button initialized and hidden initially');
+  }
+}
+
+// Scroll to contact form function
+function scrollToContactForm() {
+  const contactForm = document.querySelector('.contact-form');
+  const mainContent = document.querySelector('.main-content');
+  
+  if (contactForm && mainContent) {
+    const formPosition = contactForm.offsetTop - 100; // Add some offset for better view
+    
+    mainContent.scrollTo({
+      top: formPosition,
+      behavior: 'smooth'
+    });
+    
+    // Optional: Focus on the first input field after scrolling
+    setTimeout(() => {
+      const nameInput = document.getElementById('name');
+      if (nameInput) {
+        nameInput.focus();
+      }
+    }, 800);
+    
+    console.log('📧 Scrolled to contact form');
+  }
+}
+
+// Make function globally available
+window.scrollToContactForm = scrollToContactForm;
+
 // Enhanced scroll-based navigation highlighting with real-time detection
 function handleScrollNavigation() {
   const mainContent = document.querySelector('.main-content');
@@ -96,6 +151,9 @@ function handleScrollNavigation() {
   
   const scrollTop = mainContent.scrollTop;
   const containerHeight = mainContent.clientHeight;
+  
+  // Handle message button visibility
+  handleMessageButtonVisibility();
   
   let currentSection = null;
   let maxVisibleHeight = 0;
@@ -188,6 +246,9 @@ function setupIntersectionObserver() {
 
 // Enhanced scroll listener and initialization for responsive navigation
 document.addEventListener('DOMContentLoaded', () => {
+  // Initialize Message Button
+  initializeMessageButton();
+  
   const mainContent = document.querySelector('.main-content');
   if (mainContent) {
     // Use intersection observer for better performance
