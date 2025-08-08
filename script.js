@@ -700,13 +700,13 @@ function initializeCertificates() {
   // ===== UPDATE YOUR CERTIFICATE LINKS HERE =====
   // Replace the placeholder URLs with your actual certificate links
   const certificateLinks = {
-    aws: 'https://your-aws-certificate-link.com',                    // AWS Academy Graduate - AWS Cloud Foundations
-    'ccna-enterprise': 'https://your-ccna-enterprise-link.com',      // CCNA: Enterprise Networking, Security, and Automation
-    'ccna-intro': 'https://your-ccna-intro-link.com',                // CCNA: Introduction to Networks
-    'ccna-switching': 'https://your-ccna-switching-link.com',        // CCNA: Switching, Routing, and Wireless Essentials
-    cybersecurity: 'https://your-cybersecurity-link.com',            // Introduction to Cybersecurity
-    python1: 'https://your-python1-link.com',                        // Python Essentials 1
-    python2: 'https://your-python2-link.com'                         // Python Essentials 2
+    PWskills: 'assets/cert1.pdf',                    // AWS Academy Graduate - AWS Cloud Foundations
+    'data-analytics': 'assets/D1.pdf',      // CCNA: Enterprise Networking, Security, and Automation
+    'ccna-intro': 'assets/ciscoN.pdf',                // CCNA: Introduction to Networks
+    'ccna-switching': 'assets/NET.pdf',        // CCNA: Switching, Routing, and Wireless Essentials
+    // 'DataAnalytics': 'assets/D1.pdf',            // Introduction to Cybersecurity
+    python1: 'assets/ciscoP.pdf',                        // Python Essentials 1
+    python2: 'assets/P2.pdf'                         // Python Essentials 2
   };
   // ===============================================
   
@@ -719,11 +719,11 @@ function initializeCertificates() {
       
       // Certificate display names for user-friendly messages
       const certDisplayNames = {
-        'aws': 'AWS ACADEMY GRADUATE',
-        'ccna-enterprise': 'CCNA-ENTERPRISE',
+        'PWskills': 'Data Science with Generative AI Pwskills',
+        'data-analytics': 'data-analytics with Pwskills DElOITTE',
         'ccna-intro': 'CCNA-INTRODUCTION',
         'ccna-switching': 'CCNA-SWITCHING',
-        'cybersecurity': 'CYBERSECURITY',
+        // 'Data-Analytics': 'DATA-ANALYSIS WITH PYTHON DElOITTE',
         'python1': 'PYTHON-ESSENTIALS-1',
         'python2': 'PYTHON-ESSENTIALS-2'
       };
@@ -760,7 +760,7 @@ const formMessage = document.getElementById('formMessage');
 
 if (contactForm) {
   // Initialize EmailJS with your actual User ID
-  emailjs.init('RD85aIMspEE5s7Gzb'); // Replace with your actual EmailJS User ID
+  emailjs.init('644J_vD3LoJclBsjn'); // Replace with your actual EmailJS User ID
 
   contactForm.addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -776,13 +776,13 @@ if (contactForm) {
       from_name: formData.get('name'),
       from_email: formData.get('email'),
       message: formData.get('message'),
-      to_email: 'whatsupayush@gmail.com', // Your email address
+      to_email: 'prachirani455@gmail.com', // Your email address
     };
 
     try {
       const response = await emailjs.send(
-        'service_y0tr9c6', // Replace with your actual Service ID
-        'template_8amzd8k', // Replace with your actual Template ID
+        'service_lx18oid', // Replace with your actual Service ID
+        'template_civzh5n', // Replace with your actual Template ID
         templateParams
       );
 
@@ -811,7 +811,7 @@ if (contactForm) {
 }
 
 const roleText = document.getElementById('role-text');
-const roles = ['UI/UX Designer', 'Web Developer', 'Creative Coder', 'Graphic Designer'];
+const roles = ['Machine Learning Engineer', 'Data Analytics', 'Creative Coder', 'Graphic Designer'];
 let roleIndex = 0;
 let charIndex = 0;
 let isDeleting = false;
