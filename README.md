@@ -1,4 +1,4 @@
-# 🚀 Ayush Sharawat - Space-Themed Portfolio
+# 🚀 Prachi Rani - Space-Themed Portfolio
 
 A modern, interactive space-themed portfolio showcasing my journey as a Computer Science Engineering student specializing in Artificial Intelligence.
 
@@ -29,7 +29,7 @@ A modern, interactive space-themed portfolio showcasing my journey as a Computer
 - Profile information and background
 
 ### 💻 Skills & Technologies
-- Programming languages (Java, Python, C)
+- Programming languages (C++, Python, C)
 - Technical skills (ML, NLP, Data Structures)
 - Tools and frameworks
 - Interactive skill progress bars
@@ -38,7 +38,7 @@ A modern, interactive space-themed portfolio showcasing my journey as a Computer
 
 1. **Saar.ai** - AI-powered search engine (Perplexity clone)
    - Tech: AI/ML, NLP, Python, API Integration
-   - Repository: [GitHub](https://github.com/ayushsharawat/saar.git)
+   - Repository: [GitHub](https://github.com/prachirani00)
 
 2. **Repo Quest** - ML + NLP powered GitHub code snippet search
    - Tech: Machine Learning, NLP, Python, GitHub API
@@ -77,8 +77,8 @@ A modern, interactive space-themed portfolio showcasing my journey as a Computer
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/ayushsharawat/portfolio-2.0.git
-   cd portfolio-2.0
+   git clone https://github.com/prachirani00/Prachi-portfolio.git
+   cd prachi-portfolio
    ```
 
 2. **Open locally:**
@@ -90,7 +90,7 @@ A modern, interactive space-themed portfolio showcasing my journey as a Computer
    ```
 
 3. **View online:**
-   - GitHub Pages: [Live Demo](https://ayushsharawat.github.io/portfolio-2.0/)
+   - GitHub Pages: [Live Demo](https://github.com/prachirani00/Prachi-portfolio.git)
 
 ## 📁 Project Structure
 
@@ -143,10 +143,10 @@ portfolio-2.0/
 
 ## 📞 Contact
 
-- **Email:** whatsupayush@gmail.com
-- **Phone:** +91 9319391078
-- **LinkedIn:** [ayushsharawat](https://www.linkedin.com/in/ayushsharawat)
-- **GitHub:** [ayushsharawat](https://github.com/ayushsharawat)
+- **Email:** prachirani455@gmail.com
+- **Phone:** +91 7505053731
+- **LinkedIn:** [prachirani](https://www.linkedin.com/in/prachi-rani-0a4366264/)
+- **GitHub:** [prachirani](https://github.com/prachirani00)
 - **Location:** Ghaziabad, Uttar Pradesh, India
 
 ## 📄 License
@@ -164,4 +164,4 @@ This project is open source and available under the [MIT License](LICENSE).
 
 **⭐ If you like this portfolio, please give it a star!**
 
-Made with ❤️ by Ayush Sharawat
+Made with ❤️ by Prachi Rani
